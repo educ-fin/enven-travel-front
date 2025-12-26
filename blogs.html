@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Even Travel - Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Italiana&family=Marko+One&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --sand: #E8DDD0;
+      --stone: #D4C4B0;
+      --terracotta: #B8856A;
+      --ochre: #C4916B;
+      --bronze: #8B6F47;
+      --deep-brown: #5C4A3A;
+      --cream: #F5F1EA;
+      --white: #FFFFFF;
+      --text-dark: #2A2420;
+      --text-muted: #6B5D52;
+      --spacing-xs: 8px;
+      --spacing-sm: 16px;
+      --spacing-md: 32px;
+      --spacing-lg: 64px;
+      --spacing-xl: 96px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      background: var(--cream);
+      color: var(--text-dark);
+      -webkit-font-smoothing: antialiased;
+      font-weight: 400;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--deep-brown);
+    }
+
+    header {
+      background: #faf8f5;
+      padding: 0;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      height: 80px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 180px;
+      height: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      align-items: center;
+      margin: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2c2c2c;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 8px 12px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #C4916B;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-links a:hover::after {
+      width: 80%;
+    }
+
+    .nav-links a:hover {
+      color: #C4916B;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #2c2c2c;
+      transition: all 0.3s ease;
+    }
+
+    .hero {
+      position: relative;
+      height: 50vh;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url(images/blogg.jpg);
+      background-size: cover;
+      background-position: center;
+      transition: transform 1200ms cubic-bezier(.2, .9, .2, 1);
+    }
+
+    .hero__overlay {
+      position: relative;
+      z-index: 3;
+      width: 90%;
+      max-width: 900px;
+      background: linear-gradient(180deg, rgba(243, 86, 86, 0.08), rgba(255, 198, 198, 0.148));
+      border-radius: 16px;
+      padding: 60px 40px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .hero h1 {
+      font-family: 'Italiana', serif;
+      font-size: 56px;
+      margin: 0 0 16px;
+      line-height: 1;
+      color: rgba(79, 2, 2, 0.735);
+      text-shadow: 0 12px 36px rgba(212, 28, 28, 0.3);
+    }
+
+    .hero p {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      font-weight: 400;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.95);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--spacing-xl) 40px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-lg);
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--deep-brown);
+    }
+
+    .filter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .filter select {
+      padding: 10px 16px;
+      border: 1px solid var(--stone);
+      border-radius: 8px;
+      background: var(--white);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .filter select:hover {
+      border-color: var(--terracotta);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-md);
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--stone);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.08);
+    }
+
+    .card-content {
+      padding: var(--spacing-md);
+    }
+
+    .card h3 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--deep-brown);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--spacing-sm);
+    }
+
+    .card-date {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .read-more {
+      color: var(--terracotta);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .read-more:hover {
+      color: var(--bronze);
+      gap: 10px;
+    }
+
+    .article-view {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--white);
+      padding: var(--spacing-lg);
+      border: 1px solid var(--stone);
+    }
+
+    .article-hero img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .article-view h1 {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--deep-brown);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .article-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--stone);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .article-body {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+
+    .article-body p {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .comments {
+      margin-top: var(--spacing-xl);
+      padding-top: var(--spacing-lg);
+      border-top: 2px solid var(--stone);
+    }
+
+    .comments h3 {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--deep-brown);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .comment-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-sm);
+      background: var(--white);
+      padding: var(--spacing-md);
+      border: 1px solid var(--stone);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--stone);
+      border-radius: 0;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .comment-form input:focus,
+    .comment-form textarea:focus {
+      border-color: var(--terracotta);
+    }
+
+    .comment-form textarea {
+      grid-column: 1 / -1;
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .comment-form input[type="file"] {
+      grid-column: 1 / -1;
+      padding: 8px;
+    }
+
+    .comment-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn.primary {
+      background: var(--terracotta);
+      color: white;
+    }
+
+    .btn.primary:hover {
+      background: var(--bronze);
+      transform: translateY(-2px);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 2px solid var(--bronze);
+      color: var(--bronze);
+    }
+
+    .btn.secondary:hover {
+      background: var(--bronze);
+      color: white;
+    }
+
+    .comment-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    .comment-item {
+      background: var(--white);
+      padding: var(--spacing-md);
+      border: 1px solid var(--stone);
+    }
+
+    .comment-item .meta {
+      font-weight: 600;
+      color: var(--deep-brown);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .comment-item .meta small {
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 8px;
+    }
+
+    .comment-item .text {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .comment-item img {
+      max-width: 200px;
+      margin-top: var(--spacing-sm);
+      border: 1px solid var(--stone);
+    }
+
+    footer {
+      background: #bab2b2;
+      color: rgb(0, 0, 0);
+      padding: 60px 40px 20px;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .footer-logo img {
+      width: 180px;
+      height: auto;
+    }
+
+    .footer-title {
+      color: #493c31;
+      font-size: 25px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .footer-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #000000;
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 140, 66, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5C4A3A;
+      text-decoration: none;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: #9a7b61;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @media (max-width: 900px) {
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        background: #faf8f5;
+        flex-direction: column;
+        padding: 100px 40px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      main {
+        padding: var(--spacing-lg) 20px;
+      }
+
+      .comment-form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        height: 70px;
+      }
+
+      .hero {
+        height: 40vh;
+        min-height: 350px;
+      }
+
+      .hero__overlay {
+        padding: 40px 24px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="images/logo-01.png" alt="Even Travel Logo">
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="events.html">Événements</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="blogs.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">À propos</a></li>
+        <li><a href="FAQ.html">FAQ</a></li>
+
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay">
+      <h1>Notre Blog</h1>
+      <p>Événements & Tourisme — Retrouvez ici des récapitulatifs des événements passés, des photos et l'espace pour
+        partager vos impressions</p>
+    </div>
+  </section>
+
+  <main id="app">
+    <section id="list-view">
+      <div class="toolbar">
+        <h2 class="section-title">Événements passés</h2>
+        <div class="filter">
+          Filtrer par:
+          <select id="filterSelect">
+            <option value="all">Tous</option>
+            <option value="festival">Festival</option>
+            <option value="exposition">Exposition</option>
+            <option value="conference">Conférence</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid" id="cards"></div>
+    </section>
+
+    <section id="article-view" style="display:none"></section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <img src="images/logo-01.png" alt="Even Travel Logo">
+        </div>
+        <p class="footer-text">Explorez l'Afrique à travers des événements et destinations inoubliables.</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Réservations</h3>
+        <p class="footer-text">Cotonou, Bénin</p>
+        <p class="footer-text">eventravel2@gmail.com</p>
+        <p class="footer-text">+33781800811</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Horaires d'ouverture</h3>
+        <p class="footer-text">Lundi au Vendredi: 9h00 à 19h00</p>
+        <p class="footer-text">Samedi: 9h00 à 12h00</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Suivez-nous</h3>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/" class="social-icon" aria-label="Instagram" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com/" class="social-icon" aria-label="Facebook" target="_blank">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://www.tiktok.com/" class="social-icon" aria-label="TikTok" target="_blank">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Even Travel. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+
+    const ARTICLES = [
+      {
+        id: 'festival-2025',
+        title: 'Festival de musique — Récapitulatif 2025',
+        category: 'festival',
+        date: '2025-07-12',
+        hero: 'images/musi.jpg',
+        excerpt: "Retour sur le festival annuel : performances incroyables, ambiance festive et réactions du public.",
+        content: `<p>Le festival de musique 2025 a rassemblé plus de 8 000 personnes sur deux jours. Les têtes d'affiche ont livré des performances mémorables, et la scène locale a brillé avec de jeunes talents.</p>
+                  <p>Moments forts : concerts de nuit, marchés artisanaux, foodtrucks et ateliers pour enfants. La météo était clémente et l'ambiance fut conviviale.</p>
+                  <p>Galerie photos ci-dessous et retours des participants.</p>`
+      },
+      {
+        id: 'expo-art-2025',
+        title: "Exposition d'art contemporain — Été 2025",
+        category: 'exposition',
+        date: '2025-06-02',
+        hero: 'images/art.jpg',
+        excerpt: "Un résumé de l'exposition mettant en avant des artistes talentueux et leurs œuvres.",
+        content: `<p>L'exposition a présenté une sélection d'artistes émergents et confirmés. Les visiteurs ont pu explorer des installations, peintures et performances.</p>
+                  <p>Les échanges autour des œuvres ont été riches, et plusieurs pièces ont été vendues à des collectionneurs locaux.</p>`
+      },
+      {
+        id: 'conf-tourisme',
+        title: 'Conférence sur le tourisme durable — Juin 2025',
+        category: 'conference',
+        date: '2025-06-20',
+        hero: 'images/conf.jpg',
+        excerpt: "Retour sur les idées et discussions de notre conférence dédiée au tourisme durable.",
+        content: `<p>La conférence a réuni experts, acteurs locaux et étudiants pour discuter des bonnes pratiques du tourisme responsable.</p>
+                  <p>Les ateliers ont permis de co-construire des actions concrètes pour la saison prochaine, en associant communautés locales et opérateurs.</p>`
+      }
+    ];
+
+    function commentsKey(articleId) { return 'comments::' + articleId }
+    function saveComment(articleId, comment) {
+      const k = commentsKey(articleId)
+      const arr = JSON.parse(localStorage.getItem(k) || '[]')
+      arr.unshift(comment)
+      localStorage.setItem(k, JSON.stringify(arr))
+    }
+    function loadComments(articleId) {
+      return JSON.parse(localStorage.getItem(commentsKey(articleId)) || '[]')
+    }
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    const cardsEl = document.getElementById('cards')
+    function renderCards(filter = 'all') {
+      cardsEl.innerHTML = ''
+      const items = ARTICLES.filter(a => filter === 'all' ? true : a.category === filter)
+      for (const art of items) {
+        const div = document.createElement('article')
+        div.className = 'card'
+        div.innerHTML = `
+          <img src="${art.hero}" alt="${art.title}">
+          <div class="card-content">
+            <h3>${art.title}</h3>
+            <p>${art.excerpt}</p>
+            <div class="card-footer">
+              <span class="card-date">${art.date}</span>
+              <a href="#/article/${art.id}" class="read-more">Lire la suite →</a>
+            </div>
+          </div>`
+        cardsEl.appendChild(div)
+      }
+    }
+
+    const listView = document.getElementById('list-view')
+    const articleView = document.getElementById('article-view')
+
+    function showList() {
+      articleView.style.display = 'none'
+      listView.style.display = ''
+      renderCards(document.getElementById('filterSelect').value)
+      history.replaceState(null, '', '#/evenements')
+    }
+
+    function showArticle(id) {
+      const art = ARTICLES.find(a => a.id === id)
+      if (!art) { showList(); return }
+      listView.style.display = 'none'
+      articleView.style.display = ''
+      articleView.innerHTML = `
+        <article class="article-view">
+          <div class="article-hero"><img src="${art.hero}" alt="${art.title}"></div>
+          <h1>${art.title}</h1>
+          <div class="article-meta">
+            <div>${art.date} • ${capitalize(art.category)}</div>
+            <div>Partagez vos impressions ci-dessous</div>
+          </div>
+          <div class="article-body">
+            ${art.content}
+            <div id="gallery-${art.id}" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"></div>
+          </div>
+
+          <section class="comments">
+            <h3>Commentaires</h3>
+            <form id="commentForm" class="comment-form" onsubmit="return false">
+              <input id="c_name" placeholder="Nom *" required />
+              <input id="c_email" placeholder="Email *" type="email" required />
+              <input id="c_image" type="file" accept="image/*" />
+              <textarea id="c_text" placeholder="Votre commentaire..." required></textarea>
+            </form>
+            <div class="comment-actions">
+              <button class="btn secondary" id="backBtn">Retour</button>
+              <button class="btn primary" id="postBtn">Publier</button>
+            </div>
+            <div id="commentList" class="comment-list"></div>
+          </section>
+        </article>`
+
+      const galleryEl = document.getElementById(`gallery-${art.id}`)
+      const savedGallery = JSON.parse(localStorage.getItem('gallery::' + art.id) || '[]')
+      for (const src of savedGallery) {
+        const img = document.createElement('img')
+        img.src = src
+        img.style.width = '200px'
+        img.style.height = '140px'
+        img.style.objectFit = 'cover'
+        galleryEl.appendChild(img)
+      }
+
+      refreshComments(art.id)
+
+      document.getElementById('backBtn').addEventListener('click', showList)
+      document.getElementById('postBtn').addEventListener('click', () => submitComment(art.id))
+
+      const fileInput = document.getElementById('c_image')
+      fileInput.addEventListener('change', async (e) => {
+        const f = e.target.files[0]
+        if (!f) return
+        const src = await readFileAsDataURL(f)
+
+        const key = 'gallery::' + art.id
+        const arr = JSON.parse(localStorage.getItem(key) || '[]')
+        arr.unshift(src)
+        localStorage.setItem(key, JSON.stringify(arr))
+
+        const img = document.createElement('img')
+        img.src = src
+        img.style.width = '200px'
+        img.style.height = '140px'
+        img.style.objectFit = 'cover'
+        galleryEl.insertBefore(img, galleryEl.firstChild)
+      })
+
+      history.pushState({ page: 'article', id }, '', '#/article/' + id)
+    }
+
+    function refreshComments(articleId) {
+      const list = loadComments(articleId)
+      const node = document.getElementById('commentList')
+      node.innerHTML = ''
+      if (list.length === 0) {
+        node.innerHTML = '<p style="color:var(--text-muted)">Aucun commentaire pour le moment. Soyez le premier à laisser votre avis !</p>'
+        return
+      }
+      for (const c of list) {
+        const itm = document.createElement('div')
+        itm.className = 'comment-item'
+        const time = new Date(c.ts).toLocaleString()
+        itm.innerHTML = `<div class="meta">${escapeHtml(c.name)} <small>${escapeHtml(c.email)} • ${time}</small></div>
+                         <div class="text">${escapeHtml(c.text)}</div>`
+        if (c.image) {
+          const im = document.createElement('img')
+          im.src = c.image
+          itm.appendChild(im)
+        }
+        node.appendChild(itm)
+      }
+    }
+
+    async function submitComment(articleId) {
+      const nameEl = document.getElementById('c_name')
+      const emailEl = document.getElementById('c_email')
+      const textEl = document.getElementById('c_text')
+      const fileEl = document.getElementById('c_image')
+
+      const name = nameEl.value.trim()
+      const email = emailEl.value.trim()
+      const text = textEl.value.trim()
+      if (!name || !email || !text) {
+        alert('Merci de renseigner votre nom, email et commentaire.')
+        return
+      }
+      if (!validateEmail(email)) {
+        alert('Merci de saisir une adresse email valide.')
+        return
+      }
+
+      let imgData = null
+      if (fileEl.files && fileEl.files[0]) {
+        imgData = await readFileAsDataURL(fileEl.files[0])
+      }
+
+      const comment = { name, email, text, image: imgData, ts: Date.now() }
+      saveComment(articleId, comment)
+      refreshComments(articleId)
+
+      nameEl.value = ''
+      emailEl.value = ''
+      textEl.value = ''
+      fileEl.value = ''
+    }
+
+    function readFileAsDataURL(file) {
+      return new Promise((res, rej) => {
+        const r = new FileReader()
+        r.onload = () => res(r.result)
+        r.onerror = rej
+        r.readAsDataURL(file)
+      })
+    }
+    function validateEmail(e) { return /^\S+@\S+\.\S+$/.test(e) }
+    function escapeHtml(s) {
+      return s.replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+    }
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1) }
+
+    renderCards()
+    document.getElementById('filterSelect').addEventListener('change', (e) => renderCards(e.target.value))
+
+    function handleHash() {
+      const hash = location.hash || '#/evenements'
+      if (hash.startsWith('#/article/')) {
+        const id = hash.split('/').slice(2).join('/')
+        showArticle(id)
+      } else {
+        showList()
+      }
+    }
+    window.addEventListener('hashchange', handleHash)
+    window.addEventListener('popstate', handleHash)
+    handleHash()
+  </script>
+</body>
+
+</html>

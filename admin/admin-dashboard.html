@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Even Travel - Tableau de Bord Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Marko+One&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --sand: #E8DDD0;
+            --stone: #D4C4B0;
+            --terracotta: #B8856A;
+            --ochre: #C4916B;
+            --bronze: #8B6F47;
+            --deep-brown: #5C4A3A;
+            --cream: #F5F1EA;
+            --white: #FFFFFF;
+            --text-dark: #2A2420;
+            --text-muted: #6B5D52;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 32px;
+            --spacing-lg: 64px;
+            --spacing-xl: 96px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            background: var(--cream);
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--deep-brown);
+        }
+
+        header {
+            background: var(--white);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            height: 80px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Italiana', serif;
+            font-size: 28px;
+            color: var(--terracotta);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .admin-actions span {
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: var(--terracotta);
+            color: white;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--bronze);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 133, 106, 0.3);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--white);
+            padding: var(--spacing-md) 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 30px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .sidebar-menu a i {
+            font-size: 18px;
+            width: 20px;
+        }
+
+        .sidebar-menu a:hover {
+            background: var(--sand);
+            color: var(--deep-brown);
+        }
+
+        .sidebar-menu a.active {
+            background: linear-gradient(90deg, var(--sand), transparent);
+            color: var(--deep-brown);
+            border-left-color: var(--terracotta);
+            font-weight: 600;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: var(--spacing-lg) var(--spacing-md);
+            background: var(--cream);
+        }
+
+        .dashboard-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--deep-brown);
+        }
+
+        .add-btn {
+            background: var(--ochre);
+            color: white;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(196, 145, 107, 0.3);
+        }
+
+        .add-btn:hover {
+            background: var(--bronze);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(196, 145, 107, 0.4);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: var(--spacing-md);
+            border: 1px solid var(--stone);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-icon {
+            font-size: 40px;
+            color: var(--ochre);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--deep-brown);
+            margin-bottom: var(--spacing-xs);
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .data-table {
+            background: var(--white);
+            border: 1px solid var(--stone);
+            overflow: hidden;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .table-header {
+            background: var(--sand);
+            padding: 20px var(--spacing-md);
+            border-bottom: 1px solid var(--stone);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--deep-brown);
+        }
+
+        .export-btn {
+            background: transparent;
+            color: var(--bronze);
+            padding: 10px 24px;
+            border: 2px solid var(--bronze);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background: var(--bronze);
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 18px var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--stone);
+        }
+
+        th {
+            background: var(--cream);
+            font-weight: 600;
+            color: var(--deep-brown);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--cream);
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            margin-right: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
+            background: var(--ochre);
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: var(--bronze);
+            transform: translateY(-2px);
+        }
+
+        .delete-btn {
+            background: transparent;
+            color: var(--terracotta);
+            border: 2px solid var(--terracotta);
+        }
+
+        .delete-btn:hover {
+            background: var(--terracotta);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(42, 36, 32, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: var(--spacing-lg);
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+            border: 1px solid var(--stone);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--sand);
+        }
+
+        .modal-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--deep-brown);
+        }
+
+        .close-btn {
+            background: var(--sand);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--deep-brown);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: var(--terracotta);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+            color: var(--deep-brown);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--stone);
+            background: var(--cream);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--ochre);
+            background: var(--white);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--sand);
+        }
+
+        .save-btn {
+            background: var(--ochre);
+            color: white;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: var(--bronze);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(196, 145, 107, 0.3);
+        }
+
+        .cancel-modal-btn {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 14px 32px;
+            border: 2px solid var(--stone);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-modal-btn:hover {
+            border-color: var(--bronze);
+            color: var(--bronze);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: rgba(184, 133, 106, 0.2);
+            color: var(--terracotta);
+        }
+
+        .status-inactive {
+            background: rgba(107, 93, 82, 0.2);
+            color: var(--text-muted);
+        }
+
+        .status-published {
+            background: rgba(196, 145, 107, 0.2);
+            color: var(--ochre);
+        }
+
+        .status-draft {
+            background: rgba(212, 196, 176, 0.3);
+            color: var(--bronze);
+        }
+
+        @media (max-width: 1024px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: var(--spacing-sm) 0;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+                gap: 8px;
+                padding: 0 20px;
+            }
+
+            .sidebar-menu li {
+                margin-bottom: 0;
+            }
+
+            .sidebar-menu a {
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+
+            .sidebar-menu a.active {
+                border-left-color: transparent;
+                border-bottom-color: var(--terracotta);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .main-content {
+                padding: var(--spacing-md) var(--spacing-sm);
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: var(--spacing-md);
+            }
+
+            .modal-title {
+                font-size: 24px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 12px 16px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .logo {
+                font-size: 20px;
+            }
+
+            .admin-actions span {
+                display: none;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .action-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+                margin-bottom: 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>Even</span><span style="color: var(--deep-brown);">Travel</span>
+            </div>
+            <div class="admin-actions">
+                <span id="currentUser">Administrateur</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" data-section="dashboard">
+                    <i class="fas fa-chart-line"></i> Tableau de Bord
+                </a></li>
+                <li><a href="#" data-section="events">
+                    <i class="fas fa-calendar-alt"></i> Événements
+                </a></li>
+                <li><a href="#" data-section="destinations">
+                    <i class="fas fa-map-marked-alt"></i> Destinations
+                </a></li>
+                <li><a href="#" data-section="blogs">
+                    <i class="fas fa-blog"></i> Articles
+                </a></li>
+                <li><a href="#" data-section="comments">
+                    <i class="fas fa-comments"></i> Commentaires
+                </a></li>
+                <li><a href="#" data-section="payments">
+                    <i class="fas fa-credit-card"></i> Paiements
+                </a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section id="dashboard" class="dashboard-section active">
+                <div class="section-header">
+                    <h1 class="section-title">Tableau de Bord</h1>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-ticket-alt"></i></div>
+                        <div class="stat-number" id="totalReservations">0</div>
+                        <div class="stat-label">Réservations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                        <div class="stat-number" id="totalEvents">0</div>
+                        <div class="stat-label">Événements Actifs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-globe-africa"></i></div>
+                        <div class="stat-number" id="totalDestinations">0</div>
+                        <div class="stat-label">Destinations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-comment-dots"></i></div>
+                        <div class="stat-number" id="totalComments">0</div>
+                        <div class="stat-label">Commentaires</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="events" class="dashboard-section">
+                <div class="section-header">
+                    <h1 class="section-title">Gestion des Événements</h1>
+                    <button class="add-btn" onclick="openAddModal('event')">
+                        <i class="fas fa-plus"></i> Ajouter un Événement
+                    </button>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Liste des Événements</h3>
+                        <button class="export-btn" onclick="exportToCSV('events')">
+                            <i class="fas fa-download"></i> Exporter CSV
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Date</th>
+                                <th>Lieu</th>
+                                <th>Prix</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="destinations" class="dashboard-section">
+                <div class="section-header">
+                    <h1 class="section-title">Gestion des Destinations</h1>
+                    <button class="add-btn" onclick="openAddModal('destination')">
+                        <i class="fas fa-plus"></i> Ajouter une Destination
+                    </button>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Liste des Destinations</h3>
+                        <button class="export-btn" onclick="exportToCSV('destinations')">
+                            <i class="fas fa-download"></i> Exporter CSV
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Pays</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="destinationsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="blogs" class="dashboard-section">
+                <div class="section-header">
+                    <h1 class="section-title">Gestion des Articles</h1>
+                    <button class="add-btn" onclick="openAddModal('blog')">
+                        <i class="fas fa-plus"></i> Ajouter un Article
+                    </button>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Liste des Articles</h3>
+                        <button class="export-btn" onclick="exportToCSV('blogs')">
+                            <i class="fas fa-download"></i> Exporter CSV
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Auteur</th>
+                                <th>Date</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="blogsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="comments" class="dashboard-section">
+                <div class="section-header">
+                    <h1 class="section-title">Gestion des Commentaires</h1>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Liste des Commentaires</h3>
+                        <button class="export-btn" onclick="exportToCSV('comments')">
+                            <i class="fas fa-download"></i> Exporter CSV
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Auteur</th>
+                                <th>Article</th>
+                                <th>Commentaire</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="commentsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="payments" class="dashboard-section">
+                <div class="section-header">
+                    <h1 class="section-title">Gestion des Paiements</h1>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Paiements Confirmés</h3>
+                        <button class="export-btn" onclick="exportToCSV('payments')">
+                            <i class="fas fa-download"></i> Exporter CSV
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Réservation</th>
+                                <th>Client</th>
+                                <th>Montant</th>
+                                <th>Date</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title">Ajouter un Élément</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <form id="itemForm">
+                <input type="hidden" id="itemId">
+                <input type="hidden" id="itemType">
+
+                <div id="eventFields" class="form-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="eventTitle">Titre</label>
+                        <input type="text" id="eventTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Date de début</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventLocation">Lieu</label>
+                        <input type="text" id="eventLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventPrice">Prix (€)</label>
+                        <input type="number" id="eventPrice" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Description</label>
+                        <textarea id="eventDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventStatus">Statut</label>
+                        <select id="eventStatus" required>
+                            <option value="active">Actif</option>
+                            <option value="inactive">Inactif</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="destinationFields" class="form-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="destinationName">Nom</label>
+                        <input type="text" id="destinationName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destinationCountry">Pays</label>
+                        <input type="text" id="destinationCountry" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destinationDescription">Description</label>
+                        <textarea id="destinationDescription" required></textarea>
+                    </div>
+                </div>
+
+                <div id="blogFields" class="form-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="blogTitle">Titre</label>
+                        <input type="text" id="blogTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="blogAuthor">Auteur</label>
+                        <input type="text" id="blogAuthor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="blogContent">Contenu</label>
+                        <textarea id="blogContent" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="blogStatus">Statut</label>
+                        <select id="blogStatus" required>
+                            <option value="published">Publié</option>
+                            <option value="draft">Brouillon</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="cancel-modal-btn" onclick="closeModal()">Annuler</button>
+                    <button type="submit" class="save-btn">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let events = [];
+        let destinations = [];
+        let blogs = [];
+        let comments = [];
+        let payments = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSampleData();
+            loadDashboardData();
+            setupNavigation();
+            setupFormSubmission();
+        });
+
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.sidebar-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+                    document.getElementById(section).classList.add('active');
+                });
+            });
+        }
+
+        function loadDashboardData() {
+            updateStats();
+            loadEvents();
+            loadDestinations();
+            loadBlogs();
+            loadComments();
+            loadPayments();
+        }
+
+        function updateStats() {
+            document.getElementById('totalReservations').textContent = payments.length;
+            document.getElementById('totalEvents').textContent = events.filter(e => e.status === 'active').length;
+            document.getElementById('totalDestinations').textContent = destinations.length;
+            document.getElementById('totalComments').textContent = comments.length;
+        }
+
+        function loadEvents() {
+            const tbody = document.getElementById('eventsTableBody');
+            tbody.innerHTML = '';
+            events.forEach(event => {
+                const statusClass = event.status === 'active' ? 'status-active' : 'status-inactive';
+                const row = `
+                    <tr>
+                        <td>${event.title}</td>
+                        <td>${new Date(event.date).toLocaleDateString('fr-FR')}</td>
+                        <td>${event.location}</td>
+                        <td>${event.price}€</td>
+                        <td><span class="status-badge ${statusClass}">${event.status === 'active' ? 'Actif' : 'Inactif'}</span></td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="editItem('event', ${event.id})">Modifier</button>
+                            <button class="action-btn delete-btn" onclick="deleteItem('event', ${event.id})">Supprimer</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function loadDestinations() {
+            const tbody = document.getElementById('destinationsTableBody');
+            tbody.innerHTML = '';
+            destinations.forEach(dest => {
+                const row = `
+                    <tr>
+                        <td>${dest.name}</td>
+                        <td>${dest.country}</td>
+                        <td>${dest.description.substring(0, 50)}...</td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="editItem('destination', ${dest.id})">Modifier</button>
+                            <button class="action-btn delete-btn" onclick="deleteItem('destination', ${dest.id})">Supprimer</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function loadBlogs() {
+            const tbody = document.getElementById('blogsTableBody');
+            tbody.innerHTML = '';
+            blogs.forEach(blog => {
+                const statusClass = blog.status === 'published' ? 'status-published' : 'status-draft';
+                const row = `
+                    <tr>
+                        <td>${blog.title}</td>
+                        <td>${blog.author}</td>
+                        <td>${new Date(blog.date).toLocaleDateString('fr-FR')}</td>
+                        <td><span class="status-badge ${statusClass}">${blog.status === 'published' ? 'Publié' : 'Brouillon'}</span></td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="editItem('blog', ${blog.id})">Modifier</button>
+                            <button class="action-btn delete-btn" onclick="deleteItem('blog', ${blog.id})">Supprimer</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function loadComments() {
+            const tbody = document.getElementById('commentsTableBody');
+            tbody.innerHTML = '';
+            comments.forEach(comment => {
+                const row = `
+                    <tr>
+                        <td>${comment.author}</td>
+                        <td>${comment.article}</td>
+                        <td>${comment.content.substring(0, 50)}...</td>
+                        <td>${new Date(comment.date).toLocaleDateString('fr-FR')}</td>
+                        <td>
+                            <button class="action-btn delete-btn" onclick="deleteItem('comment', ${comment.id})">Supprimer</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function loadPayments() {
+            const tbody = document.getElementById('paymentsTableBody');
+            tbody.innerHTML = '';
+            payments.forEach(payment => {
+                const row = `
+                    <tr>
+                        <td>${payment.reservationId}</td>
+                        <td>${payment.client}</td>
+                        <td>${payment.amount}€</td>
+                        <td>${new Date(payment.date).toLocaleDateString('fr-FR')}</td>
+                        <td><span class="status-badge status-active">${payment.status === 'confirmed' ? 'Confirmé' : 'En attente'}</span></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function openAddModal(type) {
+            document.getElementById('itemType').value = type;
+            document.getElementById('itemId').value = '';
+            document.getElementById('modalTitle').textContent = `Ajouter ${getTypeLabel(type)}`;
+            document.querySelectorAll('.form-fields').forEach(field => field.style.display = 'none');
+            document.getElementById(`${type}Fields`).style.display = 'block';
+            document.getElementById('itemForm').reset();
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function editItem(type, id) {
+            const item = getItemById(type, id);
+            if (!item) return;
+            document.getElementById('itemType').value = type;
+            document.getElementById('itemId').value = id;
+            document.getElementById('modalTitle').textContent = `Modifier ${getTypeLabel(type)}`;
+            document.querySelectorAll('.form-fields').forEach(field => field.style.display = 'none');
+            document.getElementById(`${type}Fields`).style.display = 'block';
+            populateForm(type, item);
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        function populateForm(type, item) {
+            switch(type) {
+                case 'event':
+                    document.getElementById('eventTitle').value = item.title || '';
+                    document.getElementById('eventDate').value = item.date || '';
+                    document.getElementById('eventLocation').value = item.location || '';
+                    document.getElementById('eventPrice').value = item.price || '';
+                    document.getElementById('eventDescription').value = item.description || '';
+                    document.getElementById('eventStatus').value = item.status || 'active';
+                    break;
+                case 'destination':
+                    document.getElementById('destinationName').value = item.name;
+                    document.getElementById('destinationCountry').value = item.country;
+                    document.getElementById('destinationDescription').value = item.description;
+                    break;
+                case 'blog':
+                    document.getElementById('blogTitle').value = item.title;
+                    document.getElementById('blogAuthor').value = item.author;
+                    document.getElementById('blogContent').value = item.content;
+                    document.getElementById('blogStatus').value = item.status;
+                    break;
+            }
+        }
+
+        function setupFormSubmission() {
+            document.getElementById('itemForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const type = document.getElementById('itemType').value;
+                const id = document.getElementById('itemId').value;
+                const item = getFormData(type);
+                if (id) {
+                    updateItem(type, parseInt(id), item);
+                } else {
+                    addItem(type, item);
+                }
+                closeModal();
+                loadDashboardData();
+            });
+        }
+
+        function getFormData(type) {
+            const data = { date: new Date().toISOString() };
+            switch(type) {
+                case 'event':
+                    data.title = document.getElementById('eventTitle').value;
+                    data.date = document.getElementById('eventDate').value;
+                    data.location = document.getElementById('eventLocation').value;
+                    data.price = parseFloat(document.getElementById('eventPrice').value) || 0;
+                    data.description = document.getElementById('eventDescription').value;
+                    data.status = document.getElementById('eventStatus').value;
+                    break;
+                case 'destination':
+                    data.name = document.getElementById('destinationName').value;
+                    data.country = document.getElementById('destinationCountry').value;
+                    data.description = document.getElementById('destinationDescription').value;
+                    break;
+                case 'blog':
+                    data.title = document.getElementById('blogTitle').value;
+                    data.author = document.getElementById('blogAuthor').value;
+                    data.content = document.getElementById('blogContent').value;
+                    data.status = document.getElementById('blogStatus').value;
+                    break;
+            }
+            return data;
+        }
+
+        function addItem(type, item) {
+            item.id = Date.now();
+            switch(type) {
+                case 'event': events.push(item); break;
+                case 'destination': destinations.push(item); break;
+                case 'blog': blogs.push(item); break;
+            }
+        }
+
+        function updateItem(type, id, updatedItem) {
+            let array;
+            switch(type) {
+                case 'event': array = events; break;
+                case 'destination': array = destinations; break;
+                case 'blog': array = blogs; break;
+            }
+            const index = array.findIndex(item => item.id === id);
+            if (index !== -1) {
+                updatedItem.id = id;
+                array[index] = updatedItem;
+            }
+        }
+
+        function deleteItem(type, id) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) return;
+            switch(type) {
+                case 'event': events = events.filter(item => item.id !== id); break;
+                case 'destination': destinations = destinations.filter(item => item.id !== id); break;
+                case 'blog': blogs = blogs.filter(item => item.id !== id); break;
+                case 'comment': comments = comments.filter(item => item.id !== id); break;
+            }
+            loadDashboardData();
+        }
+
+        function getItemById(type, id) {
+            switch(type) {
+                case 'event': return events.find(item => item.id === id);
+                case 'destination': return destinations.find(item => item.id === id);
+                case 'blog': return blogs.find(item => item.id === id);
+            }
+        }
+
+        function getTypeLabel(type) {
+            const labels = {
+                event: 'un Événement',
+                destination: 'une Destination',
+                blog: 'un Article'
+            };
+            return labels[type] || type;
+        }
+
+        function exportToCSV(type) {
+            let data = [];
+            let filename = '';
+            switch(type) {
+                case 'events': data = events; filename = 'evenements.csv'; break;
+                case 'destinations': data = destinations; filename = 'destinations.csv'; break;
+                case 'blogs': data = blogs; filename = 'articles.csv'; break;
+                case 'comments': data = comments; filename = 'commentaires.csv'; break;
+                case 'payments': data = payments; filename = 'paiements.csv'; break;
+            }
+            if (data.length === 0) {
+                alert('Aucune donnée à exporter.');
+                return;
+            }
+            const csvContent = convertToCSV(data);
+            downloadCSV(csvContent, filename);
+        }
+
+        function convertToCSV(data) {
+            if (data.length === 0) return '';
+            const headers = Object.keys(data[0]);
+            const csvRows = [];
+            csvRows.push(headers.join(','));
+            data.forEach(row => {
+                const values = headers.map(header => {
+                    const value = row[header] || '';
+                    return `"${String(value).replace(/"/g, '""')}"`;
+                });
+                csvRows.push(values.join(','));
+            });
+            return csvRows.join('\n');
+        }
+
+        function downloadCSV(content, filename) {
+            const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                window.location.href = 'admin-login.html';
+            }
+        }
+
+        function loadSampleData() {
+            events = [
+                { id: 1, title: 'Festival de Musique', date: '2024-07-15', location: 'Cotonou', price: 150, description: 'Festival annuel de musique africaine', status: 'active' },
+                { id: 2, title: 'Voyage Culturel', date: '2024-08-20', location: 'Porto-Novo', price: 350, description: 'Découverte de la culture béninoise', status: 'active' }
+            ];
+            destinations = [
+                { id: 1, name: 'Cotonou', country: 'Bénin', description: 'Capitale économique du Bénin avec ses marchés animés et sa vie nocturne' },
+                { id: 2, name: 'Porto-Novo', country: 'Bénin', description: 'Capitale politique du Bénin, riche en histoire et patrimoine culturel' }
+            ];
+            blogs = [
+                { id: 1, title: 'Les merveilles du Bénin', author: 'Admin', content: 'Découvrez les trésors cachés du Bénin...', status: 'published', date: '2024-01-15' },
+                { id: 2, title: 'Guide de voyage', author: 'Admin', content: 'Tout ce que vous devez savoir avant de voyager...', status: 'published', date: '2024-01-20' }
+            ];
+            comments = [
+                { id: 1, author: 'Jean Dupont', article: 'Les merveilles du Bénin', content: 'Excellent article !', date: '2024-01-16' },
+                { id: 2, author: 'Marie Martin', article: 'Guide de voyage', content: 'Très utile, merci !', date: '2024-01-21' }
+            ];
+            payments = [
+                { reservationId: 'RES001', client: 'Jean Dupont', amount: 150, date: '2024-01-15', status: 'confirmed' },
+                { reservationId: 'RES002', client: 'Marie Martin', amount: 200, date: '2024-01-20', status: 'confirmed' }
+            ];
+        }
+    </script>
+</body>
+
+</html>

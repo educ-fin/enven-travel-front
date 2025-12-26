@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Even Travel - Événements Culturels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Italiana&family=Marko+One&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --sand: #E8DDD0;
+      --stone: #D4C4B0;
+      --terracotta: #B8856A;
+      --ochre: #C4916B;
+      --bronze: #8B6F47;
+      --deep-brown: #5C4A3A;
+      --cream: #F5F1EA;
+      --white: #FFFFFF;
+      --text-dark: #2A2420;
+      --text-muted: #6B5D52;
+      --spacing-xs: 8px;
+      --spacing-sm: 16px;
+      --spacing-md: 32px;
+      --spacing-lg: 64px;
+      --spacing-xl: 96px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      background: var(--cream);
+      color: var(--text-dark);
+      -webkit-font-smoothing: antialiased;
+      font-weight: 400;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--deep-brown);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: #faf8f5;
+      padding: 0;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      height: 80px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 180px;
+      height: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      align-items: center;
+      margin: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2c2c2c;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 8px 12px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #C4916B;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-links a:hover::after {
+      width: 80%;
+    }
+
+    .nav-links a:hover {
+      color: #C4916B;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #2c2c2c;
+      transition: all 0.3s ease;
+    }
+
+    .hero {
+      position: relative;
+      height: 70vh;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url(images/musi.jpg);
+      background-size: cover;
+      background-position: center;
+      transition: transform 1200ms cubic-bezier(.2, .9, .2, 1);
+    }
+
+    .hero__overlay {
+      position: relative;
+      z-index: 3;
+      width: 90%;
+      max-width: 1000px;
+      background: linear-gradient(180deg, rgba(243, 86, 86, 0.08), rgba(255, 198, 198, 0.148));
+      border-radius: 16px;
+      padding: 60px 40px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .hero h1 {
+      font-family: 'Italiana', serif;
+      font-size: 72px;
+      margin: 0 0 16px;
+      line-height: 1;
+      color: rgba(79, 2, 2, 0.735);
+      text-shadow: 0 12px 36px rgba(212, 28, 28, 0.3);
+    }
+
+    .hero p {
+      font-family: 'Inter', sans-serif;
+      margin: 0 0 32px;
+      font-weight: 400;
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .searchbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .searchbar input,
+    .searchbar select {
+      flex: 1;
+      min-width: 200px;
+      padding: 16px 24px;
+      border-radius: 50px;
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .searchbar input::placeholder {
+      color: #666;
+    }
+
+    .searchbar input:focus,
+    .searchbar select:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    .events-section {
+      padding: var(--spacing-xl) 0;
+      background: var(--white);
+    }
+
+    .section-title {
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--deep-brown);
+      text-align: center;
+      margin: 0 0 var(--spacing-sm);
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 17px;
+      margin: 0 auto var(--spacing-lg);
+      max-width: 700px;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--spacing-md);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .event-card {
+      background: var(--white);
+      border: 1px solid var(--stone);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .event-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .event-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .event-image-container {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+
+    .event-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .event-card:hover .event-image-container img {
+      transform: scale(1.08);
+    }
+
+    .event-details {
+      padding: var(--spacing-md);
+    }
+
+    .event-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--deep-brown);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .event-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: var(--spacing-sm);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .event-info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .event-price {
+      color: var(--terracotta);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .event-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-details {
+      flex: 1;
+      padding: 12px 24px;
+      background: transparent;
+      border: 2px solid var(--bronze);
+      color: var(--bronze);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-details:hover {
+      background: var(--bronze);
+      color: white;
+    }
+
+    .btn-reserve {
+      flex: 2;
+      padding: 12px 24px;
+      background: var(--terracotta);
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-reserve:hover {
+      background: var(--bronze);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: #bab2b2;
+      color: rgb(0, 0, 0);
+      padding: 60px 40px 20px;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .footer-logo img {
+      width: 180px;
+      height: auto;
+    }
+
+    .footer-title {
+      color: #493c31;
+      font-size: 25px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .footer-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #000000;
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 140, 66, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5C4A3A;
+      text-decoration: none;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: #9a7b61;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @media (max-width: 900px) {
+      .hero h1 {
+        font-size: 52px;
+      }
+
+      .searchbar {
+        flex-direction: column;
+      }
+
+      .searchbar input,
+      .searchbar select {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --spacing-lg: 48px;
+        --spacing-xl: 64px;
+      }
+
+      nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        background: #faf8f5;
+        flex-direction: column;
+        padding: 100px 40px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .section-title {
+        font-size: 32px;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        height: 70px;
+      }
+
+      .hero {
+        height: 60vh;
+        min-height: 400px;
+      }
+
+      .hero__overlay {
+        padding: 40px 24px;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="images/logo-01.png" alt="Even Travel Logo">
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="events.html">Événements</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="blogs.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">À propos</a></li>
+        <li><a href="FAQ.html">FAQ</a></li>
+
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay">
+      <h1>Tous les Événements</h1>
+      <p>Vivez des expériences culturelles et touristiques inoubliables</p>
+      <div class="searchbar">
+        <input type="text" id="searchInput" placeholder="Recherchez un événement...">
+        <select id="countrySelect" aria-label="Sélectionner un pays">
+          <option>Tous les pays</option>
+          <option>Bénin</option>
+          <option>Ghana</option>
+          <option>Maroc</option>
+          <option>Togo</option>
+          <option>Tunisie</option>
+        </select>
+        <select id="typeSelect" aria-label="Sélectionner un type d'événement">
+          <option>Type d'événement</option>
+          <option>Concert</option>
+          <option>Festival</option>
+          <option>Culture</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="events-section">
+    <div class="container">
+      <h2 class="section-title">Nos Événements</h2>
+      <p class="section-subtitle">Découvrez une sélection d'événements culturels exceptionnels à travers l'Afrique et le monde</p>
+      <div class="events-grid" id="eventsGrid">
+        <!-- les evenements seront chargés de maniere dynamique -->
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <img src="images/logo-01.png" alt="Even Travel Logo">
+        </div>
+        <p class="footer-text">Explorez l'Afrique à travers des événements et destinations inoubliables.</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Réservations</h3>
+        <p class="footer-text">Cotonou, Bénin</p>
+        <p class="footer-text">eventravel2@gmail.com</p>
+        <p class="footer-text">+33781800811</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Horaires d'ouverture</h3>
+        <p class="footer-text">Lundi au Vendredi: 9h00 à 19h00</p>
+        <p class="footer-text">Samedi: 9h00 à 12h00</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Suivez-nous</h3>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/" class="social-icon" aria-label="Instagram" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com/" class="social-icon" aria-label="Facebook" target="_blank">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://www.tiktok.com/" class="social-icon" aria-label="TikTok" target="_blank">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Even Travel. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    function loadEvents() {
+      const eventsGrid = document.getElementById('eventsGrid');
+      let events = JSON.parse(localStorage.getItem('events')) || [];
+
+      if (events.length === 0) {
+        events = [
+          {
+            id: 'vodun-days',
+            title: 'Vodun Days',
+            location: 'Ouidah, Bénin',
+            startDate: '15 Janvier 2025',
+            endDate: '20 Janvier 2025',
+            duration: '5 jours',
+            groupSize: '10-15',
+            language: 'Français',
+            price: '650',
+            image: 'images/vodun-days.jpg',
+            program: 'culture'
+          },
+          {
+            id: 'we-love-eva',
+            title: 'We Love Eva',
+            location: 'Cotonou, Bénin',
+            startDate: '27 Décembre 2025',
+            endDate: '28 Décembre 2025',
+            duration: '2 jours',
+            groupSize: '20-30',
+            language: 'Français',
+            price: '450',
+            image: 'images/weloveeya.webp',
+            program: 'culture'
+          },
+          {
+            id: 'fluo-party',
+            title: 'Fluo Party',
+            location: 'Porto-Novo, Bénin',
+            startDate: '10 Février 2025',
+            endDate: '12 Février 2025',
+            duration: '3 jours',
+            groupSize: '15-25',
+            language: 'Français',
+            price: '550',
+            image: 'images/Fluo.webp',
+            program: 'culture'
+          }
+        ];
+      }
+
+      eventsGrid.innerHTML = '';
+
+      events.forEach((event, index) => {
+        const eventCard = document.createElement('div');
+        eventCard.className = 'event-card';
+        eventCard.setAttribute('data-title', event.title.toLowerCase());
+        eventCard.setAttribute('data-country', event.location.toLowerCase());
+        eventCard.setAttribute('data-type', event.program.toLowerCase());
+        eventCard.style.transitionDelay = `${index * 0.1}s`;
+
+        eventCard.innerHTML = `
+          <div class="event-image-container">
+            <img src="${event.image || 'images/default-event.jpg'}" alt="${event.title}">
+          </div>
+          <div class="event-details">
+            <h3 class="event-title">${event.title}</h3>
+            <div class="event-info">
+              <div class="event-info-item">📍 ${event.location}</div>
+              <div class="event-info-item">📅 ${event.startDate} - ${event.endDate}</div>
+              <div class="event-info-item">⏱️ ${event.duration}</div>
+              <div class="event-info-item">👥 ${event.groupSize} personnes</div>
+              <div class="event-info-item">🌐 ${event.language}</div>
+            </div>
+            <div class="event-price">À partir de ${event.price}€</div>
+            <div class="event-buttons">
+              <button class="btn-details" onclick="showEventDetails('${event.id}')">Détails</button>
+              <button class="btn-reserve">Réserver</button>
+            </div>
+          </div>
+        `;
+
+        eventsGrid.appendChild(eventCard);
+      });
+
+      observeCards();
+    }
+
+    function showEventDetails(eventId) {
+      window.location.href = `event_detail.html?id=${eventId}`;
+    }
+
+    function observeCards() {
+      const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.event-card').forEach(card => {
+        observer.observe(card);
+      });
+    }
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    const searchInput = document.getElementById('searchInput');
+    const countrySelect = document.getElementById('countrySelect');
+    const typeSelect = document.getElementById('typeSelect');
+
+    function liveFilter() {
+      const searchValue = searchInput.value.toLowerCase().trim();
+      const countryValue = countrySelect.value.toLowerCase();
+      const typeValue = typeSelect.value.toLowerCase();
+
+      const eventCards = document.querySelectorAll('.event-card');
+
+      eventCards.forEach(card => {
+        const title = card.dataset.title;
+        const country = card.dataset.country;
+        const type = card.dataset.type;
+
+        const matchSearch = title.includes(searchValue);
+        const matchCountry = countryValue === 'tous les pays' || country.includes(countryValue);
+        const matchType = typeValue === "type d'événement" || type === typeValue;
+
+        if (matchSearch && matchCountry && matchType) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', liveFilter);
+    countrySelect.addEventListener('change', liveFilter);
+    typeSelect.addEventListener('change', liveFilter);
+
+    window.addEventListener('load', loadEvents);
+  </script>
+</body>
+
+</html>

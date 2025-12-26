@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Even Travel - Détail Événement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --sand: #E8DDD0;
+      --stone: #D4C4B0;
+      --terracotta: #B8856A;
+      --ochre: #C4916B;
+      --bronze: #8B6F47;
+      --deep-brown: #5C4A3A;
+      --cream: #F5F1EA;
+      --white: #FFFFFF;
+      --text-dark: #2A2420;
+      --text-muted: #6B5D52;
+      --spacing-xs: 8px;
+      --spacing-sm: 16px;
+      --spacing-md: 32px;
+      --spacing-lg: 64px;
+      --spacing-xl: 96px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      background: var(--cream);
+      color: var(--text-dark);
+      -webkit-font-smoothing: antialiased;
+      font-weight: 400;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--deep-brown);
+    }
+
+    header {
+      background: #faf8f5;
+      padding: 0;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      height: 80px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 180px;
+      height: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      align-items: center;
+      margin: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2c2c2c;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 8px 12px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #C4916B;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-links a:hover::after {
+      width: 80%;
+    }
+
+    .nav-links a:hover {
+      color: #C4916B;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #2c2c2c;
+      transition: all 0.3s ease;
+    }
+
+    .hero-section {
+      width: 100%;
+      max-width: 1400px;
+      margin: var(--spacing-md) auto;
+      padding: 0 40px;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-section img {
+      width: 100%;
+      height: auto;
+      max-height: 600px;
+      object-fit: cover;
+      border-radius: 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .main-content {
+      max-width: 1400px;
+      margin: var(--spacing-lg) auto;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: var(--spacing-lg);
+    }
+
+    .content-left {
+      background: var(--white);
+      padding: var(--spacing-lg);
+      border: 1px solid var(--stone);
+      animation: fadeIn 0.8s ease-out 0.2s backwards;
+    }
+
+    .content-left h1 {
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--deep-brown);
+      margin-bottom: var(--spacing-sm);
+      line-height: 1.2;
+    }
+
+    .event-meta {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      font-size: 15px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--stone);
+    }
+
+    .event-meta span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .content-left h2 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--deep-brown);
+      margin: var(--spacing-lg) 0 var(--spacing-sm);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      font-weight: 600;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .content-left p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .content-left ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .content-left ul li {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 28px;
+      position: relative;
+    }
+
+    .content-left ul li::before {
+      content: '•';
+      color: var(--terracotta);
+      font-size: 24px;
+      position: absolute;
+      left: 0;
+      top: -2px;
+    }
+
+    .highlight-box {
+      background: var(--sand);
+      padding: var(--spacing-md);
+      border-left: 4px solid var(--terracotta);
+      margin: var(--spacing-md) 0;
+    }
+
+    .highlight-box h3 {
+      font-size: 20px;
+      margin-bottom: var(--spacing-sm);
+      color: var(--deep-brown);
+    }
+
+    .highlight-box p {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+
+    .itinerary-day {
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--sand);
+    }
+
+    .itinerary-day:last-child {
+      border-bottom: none;
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .day-number {
+      background: var(--terracotta);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .day-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--deep-brown);
+    }
+
+    .booking-card {
+      background: var(--white);
+      padding: var(--spacing-lg);
+      border: 1px solid var(--stone);
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+      animation: fadeIn 0.8s ease-out 0.4s backwards;
+    }
+
+    .price-tag {
+      text-align: center;
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 2px solid var(--stone);
+    }
+
+    .price-tag .eyebrow {
+      display: block;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .price-tag h1 {
+      font-size: 48px;
+      color: var(--terracotta);
+      font-weight: 700;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .price-tag h1::after {
+      content: '€';
+      font-size: 32px;
+      margin-left: 4px;
+    }
+
+    .price-tag p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .booking-info {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-sm) 0;
+      border-bottom: 1px solid var(--sand);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 15px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-value {
+      font-size: 15px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .book-button {
+      width: 100%;
+      background: var(--terracotta);
+      color: white;
+      border: none;
+      padding: 18px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: var(--spacing-sm);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .book-button:hover {
+      background: var(--bronze);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(184, 133, 106, 0.3);
+    }
+
+    .confirmation-note {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .confirmation-note::before {
+      content: '✓';
+      font-size: 16px;
+      color: var(--terracotta);
+      font-weight: bold;
+    }
+
+    footer {
+      background: #bab2b2;
+      color: rgb(0, 0, 0);
+      padding: 60px 40px 20px;
+      margin-top: var(--spacing-xl);
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .footer-logo img {
+      width: 180px;
+      height: auto;
+    }
+
+    .footer-title {
+      color: #493c31;
+      font-size: 25px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .footer-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #000000;
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 140, 66, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5C4A3A;
+      text-decoration: none;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: #9a7b61;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 1024px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-card {
+        position: relative;
+        top: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --spacing-lg: 48px;
+        --spacing-xl: 64px;
+      }
+
+      nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        background: #faf8f5;
+        flex-direction: column;
+        padding: 100px 40px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero-section,
+      .main-content {
+        padding: 0 20px;
+      }
+
+      .content-left,
+      .booking-card {
+        padding: var(--spacing-md);
+      }
+
+      .content-left h1 {
+        font-size: 32px;
+      }
+
+      .content-left h2 {
+        font-size: 24px;
+      }
+
+      .price-tag h1 {
+        font-size: 42px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        height: 70px;
+      }
+
+      .content-left h1 {
+        font-size: 28px;
+      }
+
+      .hero-section img {
+        max-height: 400px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="images/logo-01.png" alt="Even Travel Logo">
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="events.html">Événements</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="blogs.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">À propos</a></li>
+        <li><a href="FAQ.html">FAQ</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero-section">
+    <img src="images/vodun days.jpg" alt="Vodun Days Festival" id="eventImage">
+  </section>
+
+  <section class="main-content">
+    <div class="content-left">
+      <h1 id="eventTitle">Cérémonie Traditionnelle du Vodoun</h1>
+      <div class="event-meta">
+        <span class="location">📍 <span id="eventLocation">Ouidah, Bénin</span></span>
+        <span class="date">📅 <span id="eventDate">8 - 10 Janvier 2025</span></span>
+        <span class="capacity">👥 <span id="eventCapacity">Places limitées</span></span>
+      </div>
+
+      <span class="eyebrow">À propos</span>
+      <h2>Description de l'événement</h2>
+      <p id="eventDescription">
+        Plongez au cœur de la spiritualité béninoise avec notre expérience exclusive de la Cérémonie Traditionnelle du Vodoun à Ouidah, berceau historique de cette tradition ancestrale. Cet événement unique vous offre une immersion authentique dans l'une des pratiques spirituelles les plus anciennes et les plus fascinantes d'Afrique de l'Ouest.
+      </p>
+      <p>
+        Accompagné de guides experts et de prêtres vodoun, vous découvrirez les rituels sacrés, les chants traditionnels, et l'histoire profonde de cette religion qui a traversé les siècles et les océans. Une expérience culturelle transformative qui vous permettra de comprendre la richesse et la complexité du vodoun, loin des clichés occidentaux.
+      </p>
+
+      <div class="highlight-box">
+        <h3>🌟 Moment fort</h3>
+        <p>Assistez à une cérémonie vodoun authentique dirigée par des prêtres traditionnels, avec danses rituelles, offrandes et invocations des divinités ancestrales.</p>
+      </div>
+
+      <span class="eyebrow">Programme détaillé</span>
+      <h2>Itinéraire de 3 jours</h2>
+      
+      <div class="itinerary-day">
+        <div class="day-header">
+          <div class="day-number">1</div>
+          <h3 class="day-title">Arrivée et découverte de Ouidah</h3>
+        </div>
+        <p>Accueil à l'aéroport de Cotonou et transfert vers Ouidah. Installation à votre hébergement. Visite guidée du centre historique de Ouidah, de la Porte du Non-Retour et du Temple des Pythons Sacrés. Dîner d'accueil avec présentation du programme par votre guide culturel.</p>
+      </div>
+
+      <div class="itinerary-day">
+        <div class="day-header">
+          <div class="day-number">2</div>
+          <h3 class="day-title">Cérémonie Vodoun et immersion spirituelle</h3>
+        </div>
+        <p>Matinée dédiée à la préparation spirituelle avec un prêtre vodoun qui vous expliquera les rituels et leur signification. Après-midi : participation à une cérémonie vodoun authentique dans un couvent traditionnel. Vous assisterez aux danses sacrées, aux chants et aux offrandes aux divinités. Soirée échanges avec les initiés et repas traditionnel.</p>
+      </div>
+
+      <div class="itinerary-day">
+        <div class="day-header">
+          <div class="day-number">3</div>
+          <h3 class="day-title">Patrimoine et retour</h3>
+        </div>
+        <p>Visite de la Forêt Sacrée de Kpassè et découverte des statues représentant les divinités vodoun. Exploration du marché artisanal de Ouidah pour acquérir objets traditionnels et œuvres d'art locales. Déjeuner d'adieu et transfert vers l'aéroport de Cotonou.</p>
+      </div>
+
+      <span class="eyebrow">Services inclus</span>
+      <h2>Ce qui est inclus</h2>
+      <ul id="eventInclusions">
+        <li>Hébergement en maison d'hôtes traditionnelle pendant 2 nuits</li>
+        <li>Tous les repas (petit-déjeuner, déjeuner, dîner) avec spécialités locales</li>
+        <li>Transferts aéroport-hôtel aller-retour en véhicule climatisé</li>
+        <li>Guide culturel francophone expert du vodoun</li>
+        <li>Accès exclusif aux cérémonies et sites sacrés</li>
+        <li>Autorisation de présence auprès des chefs traditionnels</li>
+        <li>Toutes les entrées aux sites et temples</li>
+        <li>Assurance voyage et assistance 24/7</li>
+        <li>Kit de bienvenue avec documentation sur le vodoun</li>
+      </ul>
+
+      <span class="eyebrow">À prévoir</span>
+      <h2>Ce qui n'est pas inclus</h2>
+      <ul>
+        <li>Vols internationaux vers Cotonou</li>
+        <li>Visa pour le Bénin (environ 50€)</li>
+        <li>Dépenses personnelles et souvenirs</li>
+        <li>Pourboires (optionnels mais appréciés)</li>
+        <li>Boissons alcoolisées</li>
+      </ul>
+
+      <div class="highlight-box">
+        <h3>📋 À savoir avant de partir</h3>
+        <p>Tenue vestimentaire respectueuse exigée lors des cérémonies. Prévoir des vêtements légers et couvrants. Vaccination contre la fièvre jaune obligatoire. Traitement antipaludique recommandé. Respect absolu des traditions et interdictions formulées par les prêtres.</p>
+      </div>
+    </div>
+
+    <div class="booking-card">
+      <div class="price-tag">
+        <span class="eyebrow">Tarif</span>
+        <h1 id="eventPrice">350</h1>
+        <p>Par personne</p>
+      </div>
+
+      <div class="booking-info">
+        <div class="info-row">
+          <span class="info-label">⏱️ Durée</span>
+          <span class="info-value" id="eventDuration">3 jours / 2 nuits</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">👥 Groupe</span>
+          <span class="info-value" id="eventGroup">8-15 personnes</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🗣️ Langue</span>
+          <span class="info-value" id="eventLanguage">Français - Anglais</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">💪 Difficulté</span>
+          <span class="info-value">Facile</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📅 Départ</span>
+          <span class="info-value">8 Janvier 2025</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🎯 Type</span>
+          <span class="info-value">Culturel</span>
+        </div>
+      </div>
+
+      <a href="reservation.html"><button class="book-button">Réserver maintenant</button></a>
+
+      <p class="confirmation-note">Confirmation sous 24h</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <img src="images/logo-01.png" alt="Even Travel Logo">
+        </div>
+        <p class="footer-text">Explorez l'Afrique à travers des événements et destinations inoubliables.</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Réservations</h3>
+        <p class="footer-text">Cotonou, Bénin</p>
+        <p class="footer-text">eventravel2@gmail.com</p>
+        <p class="footer-text">+33781800811</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Horaires d'ouverture</h3>
+        <p class="footer-text">Lundi au Vendredi: 9h00 à 19h00</p>
+        <p class="footer-text">Samedi: 9h00 à 12h00</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Suivez-nous</h3>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/" class="social-icon" aria-label="Instagram" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com/" class="social-icon" aria-label="Facebook" target="_blank">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://www.tiktok.com/" class="social-icon" aria-label="TikTok" target="_blank">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Even Travel. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    function loadEventDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const eventId = urlParams.get('id');
+
+      if (eventId) {
+        const events = JSON.parse(localStorage.getItem('events')) || [];
+        const event = events.find(e => e.id === eventId);
+
+        if (event) {
+          document.getElementById('eventTitle').textContent = event.title;
+          document.getElementById('eventLocation').textContent = event.location;
+          document.getElementById('eventDate').textContent = `${event.startDate} - ${event.endDate}`;
+          document.getElementById('eventPrice').textContent = event.price;
+          document.getElementById('eventDuration').textContent = event.duration;
+          document.getElementById('eventGroup').textContent = event.groupSize + ' personnes';
+          document.getElementById('eventLanguage').textContent = event.language;
+
+          if (event.image) {
+            document.getElementById('eventImage').src = event.image;
+            document.getElementById('eventImage').alt = event.title;
+          }
+        }
+      }
+    }
+
+    document.querySelector('.book-button').addEventListener('click', () => {
+      alert('Merci pour votre intérêt ! Notre équipe vous contactera sous 24h pour confirmer votre réservation.');
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    window.addEventListener('load', () => {
+      loadEventDetails();
+    });
+  </script>
+</body>
+
+</html>
