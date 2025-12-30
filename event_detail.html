@@ -324,6 +324,17 @@
       color: var(--deep-brown);
     }
 
+    .itinerary-activities {
+      margin-top: var(--spacing-sm);
+      padding-left: var(--spacing-md);
+    }
+
+    .itinerary-activities li {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
     .booking-card {
       background: var(--white);
       padding: var(--spacing-lg);
@@ -354,9 +365,10 @@
     }
 
     .price-tag h1::after {
-      content: '€';
-      font-size: 32px;
+      content: 'FCFA';
+      font-size: 24px;
       margin-left: 4px;
+      color: var(--text-muted);
     }
 
     .price-tag p {
@@ -431,6 +443,41 @@
       font-size: 16px;
       color: var(--terracotta);
       font-weight: bold;
+    }
+
+    .moments-forts-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+    }
+
+    .moment-fort-card {
+      background: var(--sand);
+      padding: var(--spacing-md);
+      border-radius: 8px;
+      border-left: 4px solid var(--ochre);
+    }
+
+    .moment-fort-card h4 {
+      font-size: 16px;
+      color: var(--deep-brown);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 40px;
+      color: #e53e3e;
+      background: #fed7d7;
+      border-radius: 8px;
+      margin: 20px;
     }
 
     footer {
@@ -630,124 +677,119 @@
   </header>
 
   <section class="hero-section">
-    <img src="images/vodun days.jpg" alt="Vodun Days Festival" id="eventImage">
+    <div class="loading" id="imageLoading">
+      <p>Chargement de l'image...</p>
+    </div>
+    <img src="" alt="Image de l'événement" id="eventImage" style="display: none;">
   </section>
 
   <section class="main-content">
     <div class="content-left">
-      <h1 id="eventTitle">Cérémonie Traditionnelle du Vodoun</h1>
-      <div class="event-meta">
-        <span class="location">📍 <span id="eventLocation">Ouidah, Bénin</span></span>
-        <span class="date">📅 <span id="eventDate">8 - 10 Janvier 2025</span></span>
-        <span class="capacity">👥 <span id="eventCapacity">Places limitées</span></span>
+      <div class="loading" id="contentLoading">
+        <p>Chargement des détails de l'événement...</p>
       </div>
-
-      <span class="eyebrow">À propos</span>
-      <h2>Description de l'événement</h2>
-      <p id="eventDescription">
-        Plongez au cœur de la spiritualité béninoise avec notre expérience exclusive de la Cérémonie Traditionnelle du Vodoun à Ouidah, berceau historique de cette tradition ancestrale. Cet événement unique vous offre une immersion authentique dans l'une des pratiques spirituelles les plus anciennes et les plus fascinantes d'Afrique de l'Ouest.
-      </p>
-      <p>
-        Accompagné de guides experts et de prêtres vodoun, vous découvrirez les rituels sacrés, les chants traditionnels, et l'histoire profonde de cette religion qui a traversé les siècles et les océans. Une expérience culturelle transformative qui vous permettra de comprendre la richesse et la complexité du vodoun, loin des clichés occidentaux.
-      </p>
-
-      <div class="highlight-box">
-        <h3>🌟 Moment fort</h3>
-        <p>Assistez à une cérémonie vodoun authentique dirigée par des prêtres traditionnels, avec danses rituelles, offrandes et invocations des divinités ancestrales.</p>
-      </div>
-
-      <span class="eyebrow">Programme détaillé</span>
-      <h2>Itinéraire de 3 jours</h2>
       
-      <div class="itinerary-day">
-        <div class="day-header">
-          <div class="day-number">1</div>
-          <h3 class="day-title">Arrivée et découverte de Ouidah</h3>
+      <div id="eventContent" style="display: none;">
+        <h1 id="eventTitle">Chargement...</h1>
+        <div class="event-meta">
+          <span class="location">📍 <span id="eventLocation">Chargement...</span></span>
+          <span class="date">📅 <span id="eventDate">Chargement...</span></span>
+          <span class="capacity">👥 <span id="eventCapacity">Chargement...</span></span>
         </div>
-        <p>Accueil à l'aéroport de Cotonou et transfert vers Ouidah. Installation à votre hébergement. Visite guidée du centre historique de Ouidah, de la Porte du Non-Retour et du Temple des Pythons Sacrés. Dîner d'accueil avec présentation du programme par votre guide culturel.</p>
-      </div>
 
-      <div class="itinerary-day">
-        <div class="day-header">
-          <div class="day-number">2</div>
-          <h3 class="day-title">Cérémonie Vodoun et immersion spirituelle</h3>
+        <span class="eyebrow">À propos</span>
+        <h2>Description de l'événement</h2>
+        <p id="eventDescription">
+          Chargement de la description...
+        </p>
+        <p id="eventDescriptionLongue" style="display: none;"></p>
+
+        <div id="momentsFortsSection" style="display: none;">
+          <span class="eyebrow">Moments forts</span>
+          <h2>Ce qui rend cet événement unique</h2>
+          <div class="moments-forts-container" id="momentsFortsContainer">
+            <!-- Les moments forts seront chargés dynamiquement -->
+          </div>
         </div>
-        <p>Matinée dédiée à la préparation spirituelle avec un prêtre vodoun qui vous expliquera les rituels et leur signification. Après-midi : participation à une cérémonie vodoun authentique dans un couvent traditionnel. Vous assisterez aux danses sacrées, aux chants et aux offrandes aux divinités. Soirée échanges avec les initiés et repas traditionnel.</p>
-      </div>
 
-      <div class="itinerary-day">
-        <div class="day-header">
-          <div class="day-number">3</div>
-          <h3 class="day-title">Patrimoine et retour</h3>
+        <span class="eyebrow">Programme détaillé</span>
+        <h2 id="itineraryTitle">Itinéraire</h2>
+        <div id="itineraryContainer">
+          <!-- L'itinéraire sera chargé dynamiquement -->
+          <div class="loading">
+            <p>Chargement de l'itinéraire...</p>
+          </div>
         </div>
-        <p>Visite de la Forêt Sacrée de Kpassè et découverte des statues représentant les divinités vodoun. Exploration du marché artisanal de Ouidah pour acquérir objets traditionnels et œuvres d'art locales. Déjeuner d'adieu et transfert vers l'aéroport de Cotonou.</p>
-      </div>
 
-      <span class="eyebrow">Services inclus</span>
-      <h2>Ce qui est inclus</h2>
-      <ul id="eventInclusions">
-        <li>Hébergement en maison d'hôtes traditionnelle pendant 2 nuits</li>
-        <li>Tous les repas (petit-déjeuner, déjeuner, dîner) avec spécialités locales</li>
-        <li>Transferts aéroport-hôtel aller-retour en véhicule climatisé</li>
-        <li>Guide culturel francophone expert du vodoun</li>
-        <li>Accès exclusif aux cérémonies et sites sacrés</li>
-        <li>Autorisation de présence auprès des chefs traditionnels</li>
-        <li>Toutes les entrées aux sites et temples</li>
-        <li>Assurance voyage et assistance 24/7</li>
-        <li>Kit de bienvenue avec documentation sur le vodoun</li>
-      </ul>
+        <span class="eyebrow">Services inclus</span>
+        <h2>Ce qui est inclus</h2>
+        <ul id="eventInclusions">
+          <li>Chargement des services inclus...</li>
+        </ul>
 
-      <span class="eyebrow">À prévoir</span>
-      <h2>Ce qui n'est pas inclus</h2>
-      <ul>
-        <li>Vols internationaux vers Cotonou</li>
-        <li>Visa pour le Bénin (environ 50€)</li>
-        <li>Dépenses personnelles et souvenirs</li>
-        <li>Pourboires (optionnels mais appréciés)</li>
-        <li>Boissons alcoolisées</li>
-      </ul>
+        <span class="eyebrow">À prévoir</span>
+        <h2>Ce qui n'est pas inclus</h2>
+        <ul id="eventExclusions">
+          <li>Chargement des services non inclus...</li>
+        </ul>
 
-      <div class="highlight-box">
-        <h3>📋 À savoir avant de partir</h3>
-        <p>Tenue vestimentaire respectueuse exigée lors des cérémonies. Prévoir des vêtements légers et couvrants. Vaccination contre la fièvre jaune obligatoire. Traitement antipaludique recommandé. Respect absolu des traditions et interdictions formulées par les prêtres.</p>
+        <div id="informationsPratiquesSection" style="display: none;">
+          <span class="eyebrow">À savoir avant de partir</span>
+          <h2>Informations pratiques</h2>
+          <div class="highlight-box">
+            <h3>📋 Informations importantes</h3>
+            <p id="eventInformationsPratiques">Chargement...</p>
+          </div>
+        </div>
+
+        <div id="recommandationsSection" style="display: none;">
+          <div class="highlight-box">
+            <h3>💡 Recommandations</h3>
+            <p id="eventRecommandations">Chargement...</p>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="booking-card">
       <div class="price-tag">
         <span class="eyebrow">Tarif</span>
-        <h1 id="eventPrice">350</h1>
+        <h1 id="eventPrice">0</h1>
         <p>Par personne</p>
       </div>
 
       <div class="booking-info">
         <div class="info-row">
           <span class="info-label">⏱️ Durée</span>
-          <span class="info-value" id="eventDuration">3 jours / 2 nuits</span>
+          <span class="info-value" id="eventDuration">Chargement...</span>
         </div>
         <div class="info-row">
           <span class="info-label">👥 Groupe</span>
-          <span class="info-value" id="eventGroup">8-15 personnes</span>
+          <span class="info-value" id="eventGroup">Chargement...</span>
         </div>
         <div class="info-row">
           <span class="info-label">🗣️ Langue</span>
-          <span class="info-value" id="eventLanguage">Français - Anglais</span>
+          <span class="info-value" id="eventLanguage">Chargement...</span>
         </div>
         <div class="info-row">
           <span class="info-label">💪 Difficulté</span>
-          <span class="info-value">Facile</span>
+          <span class="info-value" id="eventDifficulty">Chargement...</span>
         </div>
         <div class="info-row">
           <span class="info-label">📅 Départ</span>
-          <span class="info-value">8 Janvier 2025</span>
+          <span class="info-value" id="eventStartDate">Chargement...</span>
         </div>
         <div class="info-row">
           <span class="info-label">🎯 Type</span>
-          <span class="info-value">Culturel</span>
+          <span class="info-value" id="eventCategory">Chargement...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🏛️ Catégorie</span>
+          <span class="info-value" id="eventCategoryFull">Chargement...</span>
         </div>
       </div>
 
-      <a href="reservation.html"><button class="book-button">Réserver maintenant</button></a>
+      <button class="book-button" id="reserveButton">Réserver maintenant</button>
 
       <p class="confirmation-note">Confirmation sous 24h</p>
     </div>
@@ -793,6 +835,9 @@
   </footer>
 
   <script>
+    const BASE_URL = 'https://even-travel-backend.onrender.com';
+    
+    // Menu mobile
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
 
@@ -808,53 +853,325 @@
       });
     });
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
+    // Mise à jour année
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    function loadEventDetails() {
+    // Récupérer l'ID depuis l'URL
+    function getEventIdFromUrl() {
       const urlParams = new URLSearchParams(window.location.search);
-      const eventId = urlParams.get('id');
+      return urlParams.get('id');
+    }
 
-      if (eventId) {
-        const events = JSON.parse(localStorage.getItem('events')) || [];
-        const event = events.find(e => e.id === eventId);
+    // Formater la date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    }
 
-        if (event) {
-          document.getElementById('eventTitle').textContent = event.title;
-          document.getElementById('eventLocation').textContent = event.location;
-          document.getElementById('eventDate').textContent = `${event.startDate} - ${event.endDate}`;
-          document.getElementById('eventPrice').textContent = event.price;
-          document.getElementById('eventDuration').textContent = event.duration;
-          document.getElementById('eventGroup').textContent = event.groupSize + ' personnes';
-          document.getElementById('eventLanguage').textContent = event.language;
+    // Formater la date avec heure
+    function formatDateTime(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
 
-          if (event.image) {
-            document.getElementById('eventImage').src = event.image;
-            document.getElementById('eventImage').alt = event.title;
-          }
+    // Traduire la catégorie
+    function translateCategory(category) {
+      const categories = {
+        'concert': 'Concert',
+        'festival': 'Festival',
+        'culture': 'Culturel',
+        'sport': 'Sportif',
+        'excursion': 'Excursion',
+        'formation': 'Formation',
+        'soiree': 'Soirée',
+        'autre': 'Autre'
+      };
+      return categories[category] || category;
+    }
+
+    // Traduire la difficulté
+    function translateDifficulty(difficulty) {
+      const difficulties = {
+        'Très facile': 'Très facile',
+        'Facile': 'Facile',
+        'Modérée': 'Modérée',
+        'Difficile': 'Difficile',
+        'Très difficile': 'Très difficile'
+      };
+      return difficulties[difficulty] || difficulty;
+    }
+
+    // Charger les détails de l'événement
+    async function loadEventDetails() {
+      const eventId = getEventIdFromUrl();
+      
+      if (!eventId) {
+        showErrorMessage("Aucun événement spécifié");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${BASE_URL}/api/v1/events/${eventId}`);
+        
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
         }
+        
+        const result = await response.json();
+        const event = result.data?.event || result.data;
+        
+        if (!event) {
+          throw new Error("Événement non trouvé");
+        }
+        
+        // Remplir les données
+        populateEventData(event);
+        
+        // Cacher les loaders
+        document.getElementById('imageLoading').style.display = 'none';
+        document.getElementById('contentLoading').style.display = 'none';
+        document.getElementById('eventContent').style.display = 'block';
+        
+      } catch (error) {
+        console.error('Erreur lors du chargement:', error);
+        showErrorMessage(error.message || "Impossible de charger l'événement");
       }
     }
 
-    document.querySelector('.book-button').addEventListener('click', () => {
-      alert('Merci pour votre intérêt ! Notre équipe vous contactera sous 24h pour confirmer votre réservation.');
+    // Remplir les données dans la page
+    function populateEventData(event) {
+      // Titre
+      document.getElementById('eventTitle').textContent = event.nom || 'Événement';
+      document.title = `${event.nom} - Even Travel`;
+      
+      // Description
+      document.getElementById('eventDescription').textContent = event.description || '';
+      
+      // Description longue (si disponible)
+      if (event.descriptionLongue && event.descriptionLongue.trim() !== '') {
+        document.getElementById('eventDescriptionLongue').textContent = event.descriptionLongue;
+        document.getElementById('eventDescriptionLongue').style.display = 'block';
+      }
+      
+      // Localisation
+      document.getElementById('eventLocation').textContent = event.lieu || 'Non spécifié';
+      
+      // Dates
+      if (event.date) {
+        const startDate = new Date(event.date);
+        document.getElementById('eventStartDate').textContent = formatDateTime(event.date);
+        
+        if (event.dateFin) {
+          const endDate = new Date(event.dateFin);
+          if (startDate.toDateString() !== endDate.toDateString()) {
+            document.getElementById('eventDate').textContent = 
+              `${formatDate(event.date)} - ${formatDate(event.dateFin)}`;
+          } else {
+            document.getElementById('eventDate').textContent = formatDate(event.date);
+          }
+        } else {
+          document.getElementById('eventDate').textContent = formatDate(event.date);
+        }
+      }
+      
+      // Prix
+      if (event.prix) {
+        document.getElementById('eventPrice').textContent = 
+          `${event.prix.toLocaleString('fr-FR')}`;
+      }
+      
+      // Capacité
+      const placesRestantes = event.placesRestantes || 0;
+      const placesTotales = event.placesTotales || 0;
+      document.getElementById('eventCapacity').textContent = 
+        `${placesRestantes} places sur ${placesTotales}`;
+      
+      // Durée
+      if (event.duree) {
+        document.getElementById('eventDuration').textContent = 
+          `${event.duree} jour${event.duree > 1 ? 's' : ''}`;
+      }
+      
+      // Groupe
+      if (event.tailleGroupeMin && event.tailleGroupeMax) {
+        document.getElementById('eventGroup').textContent = 
+          `${event.tailleGroupeMin}-${event.tailleGroupeMax} personnes`;
+      } else if (event.placesTotales) {
+        document.getElementById('eventGroup').textContent = 
+          `Max ${event.placesTotales} personnes`;
+      }
+      
+      // Langue
+      if (event.langues) {
+        const langues = Array.isArray(event.langues) ? event.langues : [event.langues];
+        document.getElementById('eventLanguage').textContent = langues.join(' - ');
+      }
+      
+      // Difficulté
+      if (event.difficulte) {
+        document.getElementById('eventDifficulty').textContent = translateDifficulty(event.difficulte);
+      }
+      
+      // Catégorie
+      if (event.categorie) {
+        document.getElementById('eventCategory').textContent = translateCategory(event.categorie);
+        document.getElementById('eventCategoryFull').textContent = translateCategory(event.categorie);
+      }
+      
+      // Image
+      if (event.images && event.images[0]) {
+        const img = document.getElementById('eventImage');
+        img.src = event.images[0].url;
+        img.alt = event.nom || 'Événement';
+        img.style.display = 'block';
+        document.getElementById('imageLoading').style.display = 'none';
+      }
+      
+      // Services inclus
+      if (event.servicesInclus && event.servicesInclus.length > 0) {
+        const inclusionsList = document.getElementById('eventInclusions');
+        inclusionsList.innerHTML = '';
+        
+        event.servicesInclus.forEach(service => {
+          if (service && service.trim()) {
+            const li = document.createElement('li');
+            li.textContent = service;
+            inclusionsList.appendChild(li);
+          }
+        });
+      }
+      
+      // Services non inclus
+      if (event.servicesNonInclus && event.servicesNonInclus.length > 0) {
+        const exclusionsList = document.getElementById('eventExclusions');
+        exclusionsList.innerHTML = '';
+        
+        event.servicesNonInclus.forEach(service => {
+          if (service && service.trim()) {
+            const li = document.createElement('li');
+            li.textContent = service;
+            exclusionsList.appendChild(li);
+          }
+        });
+      }
+      
+      // Moments forts
+      if (event.momentsForts && event.momentsForts.length > 0) {
+        const container = document.getElementById('momentsFortsContainer');
+        container.innerHTML = '';
+        
+        event.momentsForts.forEach(moment => {
+          if (moment && moment.trim()) {
+            const card = document.createElement('div');
+            card.className = 'moment-fort-card';
+            card.innerHTML = `
+              <h4>${moment}</h4>
+            `;
+            container.appendChild(card);
+          }
+        });
+        document.getElementById('momentsFortsSection').style.display = 'block';
+      }
+      
+      // Itinéraire
+      if (event.itineraire && event.itineraire.length > 0) {
+        const container = document.getElementById('itineraryContainer');
+        container.innerHTML = '';
+        
+        event.itineraire.sort((a, b) => (a.jour || 0) - (b.jour || 0)).forEach(jour => {
+          const dayElement = document.createElement('div');
+          dayElement.className = 'itinerary-day';
+          
+          let activitiesHtml = '';
+          if (jour.activites && jour.activites.length > 0) {
+            activitiesHtml = `
+              <div class="itinerary-activities">
+                <ul>
+                  ${jour.activites.map(activity => `<li>${activity}</li>`).join('')}
+                </ul>
+              </div>
+            `;
+          }
+          
+          dayElement.innerHTML = `
+            <div class="day-header">
+              <div class="day-number">${jour.jour || '?'}</div>
+              <h3 class="day-title">${jour.titre || `Jour ${jour.jour || '?'}`}</h3>
+            </div>
+            <p>${jour.description || ''}</p>
+            ${activitiesHtml}
+          `;
+          
+          container.appendChild(dayElement);
+        });
+      }
+      
+      // Informations pratiques
+      if (event.informationsPratiques && event.informationsPratiques.trim() !== '') {
+        document.getElementById('eventInformationsPratiques').textContent = event.informationsPratiques;
+        document.getElementById('informationsPratiquesSection').style.display = 'block';
+      }
+      
+      // Recommandations
+      if (event.recommandations && event.recommandations.trim() !== '') {
+        document.getElementById('eventRecommandations').textContent = event.recommandations;
+        document.getElementById('recommandationsSection').style.display = 'block';
+      }
+    }
+
+    // Afficher un message d'erreur
+    function showErrorMessage(message) {
+      const mainContent = document.querySelector('.main-content');
+      if (mainContent) {
+        mainContent.innerHTML = `
+          <div class="error-message" style="
+            text-align: center;
+            padding: 40px;
+            color: #e53e3e;
+            background: #fed7d7;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+          ">
+            <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px;"></i>
+            <h3>Erreur de chargement</h3>
+            <p>${message}</p>
+            <button onclick="window.location.href='events.html'" style="
+              margin-top: 15px;
+              padding: 10px 20px;
+              background: var(--terracotta);
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+            ">Retour aux événements</button>
+          </div>
+        `;
+      }
+    }
+
+    // Bouton de réservation
+    document.getElementById('reserveButton').addEventListener('click', () => {
+      const eventId = getEventIdFromUrl();
+      if (eventId) {
+        window.location.href = `reservation.html?eventId=${eventId}`;
+      } else {
+        alert('Impossible de procéder à la réservation. Veuillez réessayer.');
+      }
     });
 
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    window.addEventListener('load', () => {
-      loadEventDetails();
-    });
+    // Charger les données au démarrage
+    window.addEventListener('DOMContentLoaded', loadEventDetails);
   </script>
 </body>
 

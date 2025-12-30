@@ -4,12 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Even Travel - Destinations</title>
+  <title>Even Travel - Détail Événement</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Italiana&family=Marko+One&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-    rel="stylesheet">
 
   <style>
     :root {
@@ -58,12 +55,6 @@
       font-weight: 600;
       line-height: 1.2;
       color: var(--deep-brown);
-    }
-
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
     }
 
     header {
@@ -160,238 +151,340 @@
       transition: all 0.3s ease;
     }
 
-    .hero {
-      position: relative;
-      height: 70vh;
-      min-height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+    .hero-section {
+      width: 100%;
+      max-width: 1400px;
+      margin: var(--spacing-md) auto;
+      padding: 0 40px;
+      animation: fadeIn 0.8s ease-out;
     }
 
-    .hero__bg {
-      position: absolute;
-      inset: 0;
-      background-image: url(images/travel.jpg);
-      background-size: cover;
-      background-position: center;
-      transition: transform 1200ms cubic-bezier(.2, .9, .2, 1);
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .hero__overlay {
-      position: relative;
-      z-index: 3;
-      width: 90%;
-      max-width: 1000px;
-      background: linear-gradient(180deg, rgba(243, 86, 86, 0.08), rgba(255, 198, 198, 0.148));
-      border-radius: 16px;
-      padding: 60px 40px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      text-align: center;
-      color: rgba(255, 255, 255, 0.95);
+    .hero-section img {
+      width: 100%;
+      height: auto;
+      max-height: 600px;
+      object-fit: cover;
+      border-radius: 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
     }
 
-    .hero h1 {
-      font-family: 'Italiana', serif;
-      font-size: 72px;
-      margin: 0 0 16px;
-      line-height: 1;
-      color: rgba(79, 2, 2, 0.735);
-      text-shadow: 0 12px 36px rgba(212, 28, 28, 0.3);
+    .main-content {
+      max-width: 1400px;
+      margin: var(--spacing-lg) auto;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: var(--spacing-lg);
     }
 
-    .hero p {
-      font-family: 'Inter', sans-serif;
-      margin: 0 0 32px;
-      font-weight: 400;
-      font-size: 20px;
-      color: #2A2420;
-    }
-
-    .searchbar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      max-width: 900px;
-      margin: 0 auto;
-      flex-wrap: wrap;
-    }
-
-    .searchbar input,
-    .searchbar select {
-      flex: 1;
-      min-width: 200px;
-      padding: 16px 24px;
-      border-radius: 50px;
-      border: none;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      font-size: 15px;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    .searchbar input::placeholder {
-      color: #666;
-    }
-
-    .searchbar input:focus,
-    .searchbar select:focus {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
-    }
-
-    .destinations-section {
-      padding: var(--spacing-xl) 0;
+    .content-left {
       background: var(--white);
+      padding: var(--spacing-lg);
+      border: 1px solid var(--stone);
+      animation: fadeIn 0.8s ease-out 0.2s backwards;
     }
 
-    .section-title {
+    .content-left h1 {
       font-size: 42px;
       font-weight: 600;
       color: var(--deep-brown);
-      text-align: center;
-      margin: 0 0 var(--spacing-sm);
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 17px;
-      margin: 0 auto var(--spacing-lg);
-      max-width: 700px;
-    }
-
-    .destinations-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: var(--spacing-md);
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .destination-card {
-      background: var(--white);
-      border: 1px solid var(--stone);
-      overflow: hidden;
-      transition: all 0.4s ease;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .destination-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .destination-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-    }
-
-    .destination-image-container {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 4/3;
-    }
-
-    .destination-image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-
-    .destination-card:hover .destination-image-container img {
-      transform: scale(1.08);
-    }
-
-    .destination-details {
-      padding: var(--spacing-md);
-    }
-
-    .destination-title {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--deep-brown);
       margin-bottom: var(--spacing-sm);
+      line-height: 1.2;
     }
 
-    .destination-info {
+    .event-meta {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: var(--spacing-sm);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      font-size: 15px;
       color: var(--text-muted);
-      font-size: 14px;
+      flex-wrap: wrap;
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--stone);
     }
 
-    .destination-info-item {
+    .event-meta span {
       display: flex;
       align-items: center;
       gap: 8px;
+      font-weight: 500;
     }
 
-    .destination-price {
+    .content-left h2 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--deep-brown);
+      margin: var(--spacing-lg) 0 var(--spacing-sm);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      font-weight: 600;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .content-left p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .content-left ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .content-left ul li {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 28px;
+      position: relative;
+    }
+
+    .content-left ul li::before {
+      content: '•';
       color: var(--terracotta);
       font-size: 24px;
-      font-weight: 700;
+      position: absolute;
+      left: 0;
+      top: -2px;
+    }
+
+    .highlight-box {
+      background: var(--sand);
+      padding: var(--spacing-md);
+      border-left: 4px solid var(--terracotta);
+      margin: var(--spacing-md) 0;
+    }
+
+    .highlight-box h3 {
+      font-size: 20px;
+      margin-bottom: var(--spacing-sm);
+      color: var(--deep-brown);
+    }
+
+    .highlight-box p {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+
+    .itinerary-day {
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--sand);
+    }
+
+    .itinerary-day:last-child {
+      border-bottom: none;
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
       margin-bottom: var(--spacing-sm);
     }
 
-    .destination-buttons {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn-details {
-      flex: 1;
-      padding: 12px 24px;
-      background: transparent;
-      border: 2px solid var(--bronze);
-      color: var(--bronze);
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .btn-details:hover {
-      background: var(--bronze);
-      color: white;
-    }
-
-    .btn-reserve {
-      flex: 2;
-      padding: 12px 24px;
+    .day-number {
       background: var(--terracotta);
-      border: none;
       color: white;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-decoration: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
     }
 
-    .btn-reserve:hover {
+    .day-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--deep-brown);
+    }
+
+    .itinerary-activities {
+      margin-top: var(--spacing-sm);
+      padding-left: var(--spacing-md);
+    }
+
+    .itinerary-activities li {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .booking-card {
+      background: var(--white);
+      padding: var(--spacing-lg);
+      border: 1px solid var(--stone);
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+      animation: fadeIn 0.8s ease-out 0.4s backwards;
+    }
+
+    .price-tag {
+      text-align: center;
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 2px solid var(--stone);
+    }
+
+    .price-tag .eyebrow {
+      display: block;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .price-tag h1 {
+      font-size: 48px;
+      color: var(--terracotta);
+      font-weight: 700;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .price-tag h1::after {
+      content: 'FCFA';
+      font-size: 24px;
+      margin-left: 4px;
+      color: var(--text-muted);
+    }
+
+    .price-tag p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .booking-info {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-sm) 0;
+      border-bottom: 1px solid var(--sand);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 15px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-value {
+      font-size: 15px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .book-button {
+      width: 100%;
+      background: var(--terracotta);
+      color: white;
+      border: none;
+      padding: 18px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: var(--spacing-sm);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .book-button:hover {
       background: var(--bronze);
       transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(184, 133, 106, 0.3);
+    }
+
+    .confirmation-note {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .confirmation-note::before {
+      content: '✓';
+      font-size: 16px;
+      color: var(--terracotta);
+      font-weight: bold;
+    }
+
+    .moments-forts-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+    }
+
+    .moment-fort-card {
+      background: var(--sand);
+      padding: var(--spacing-md);
+      border-radius: 8px;
+      border-left: 4px solid var(--ochre);
+    }
+
+    .moment-fort-card h4 {
+      font-size: 16px;
+      color: var(--deep-brown);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 40px;
+      color: #e53e3e;
+      background: #fed7d7;
+      border-radius: 8px;
+      margin: 20px;
     }
 
     footer {
       background: #bab2b2;
       color: rgb(0, 0, 0);
       padding: 60px 40px 20px;
+      margin-top: var(--spacing-xl);
     }
 
     .footer-content {
@@ -479,31 +572,14 @@
       color: #9ca3af;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+    @media (max-width: 1024px) {
+      .main-content {
+        grid-template-columns: 1fr;
       }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-
-    @media (max-width: 900px) {
-      .hero h1 {
-        font-size: 52px;
-      }
-
-      .searchbar {
-        flex-direction: column;
-      }
-
-      .searchbar input,
-      .searchbar select {
-        width: 100%;
+      .booking-card {
+        position: relative;
+        top: 0;
       }
     }
 
@@ -538,12 +614,26 @@
         display: flex;
       }
 
-      .section-title {
+      .hero-section,
+      .main-content {
+        padding: 0 20px;
+      }
+
+      .content-left,
+      .booking-card {
+        padding: var(--spacing-md);
+      }
+
+      .content-left h1 {
         font-size: 32px;
       }
 
-      .destinations-grid {
-        grid-template-columns: 1fr;
+      .content-left h2 {
+        font-size: 24px;
+      }
+
+      .price-tag h1 {
+        font-size: 42px;
       }
     }
 
@@ -552,21 +642,12 @@
         height: 70px;
       }
 
-      .hero {
-        height: 60vh;
-        min-height: 400px;
+      .content-left h1 {
+        font-size: 28px;
       }
 
-      .hero__overlay {
-        padding: 40px 24px;
-      }
-
-      .hero h1 {
-        font-size: 42px;
-      }
-
-      .hero p {
-        font-size: 16px;
+      .hero-section img {
+        max-height: 400px;
       }
     }
   </style>
@@ -586,7 +667,6 @@
         <li><a href="contact.html">Contact</a></li>
         <li><a href="about.html">À propos</a></li>
         <li><a href="FAQ.html">FAQ</a></li>
-
       </ul>
       <div class="hamburger" id="hamburger">
         <span></span>
@@ -596,91 +676,122 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <div class="hero__bg"></div>
-    <div class="hero__overlay">
-      <h1>Toutes les Destinations</h1>
-      <p>Découvrez nos destinations africaines uniques</p>
-      <div class="searchbar">
-        <input type="text" id="searchInput" placeholder="Recherchez une destination...">
-        <select id="countrySelect" aria-label="Sélectionner un pays">
-          <option>Tous les pays</option>
-          <option>Bénin</option>
-          <option>Ghana</option>
-          <option>Maroc</option>
-          <option>Togo</option>
-          <option>Tunisie</option>
-        </select>
-        <select id="typeSelect" aria-label="Sélectionner un type de destination">
-          <option>Type de destination</option>
-          <option>Culture</option>
-          <option>Nature</option>
-          <option>Urbaine</option>
-        </select>
-      </div>
+  <section class="hero-section">
+    <div class="loading" id="imageLoading">
+      <p>Chargement de l'image...</p>
     </div>
+    <img src="" alt="Image de l'événement" id="eventImage" style="display: none;">
   </section>
 
-  <section class="destinations-section">
-    <div class="container">
-      <h2 class="section-title">Nos Destinations</h2>
-      <p class="section-subtitle">Explorez des lieux authentiques et découvrez la richesse culturelle de l'Afrique</p>
-      <div class="destinations-grid" id="destinationsGrid">
+  <section class="main-content">
+    <div class="content-left">
+      <div class="loading" id="contentLoading">
+        <p>Chargement des détails de l'événement...</p>
+      </div>
+      
+      <div id="eventContent" style="display: none;">
+        <h1 id="eventTitle">Chargement...</h1>
+        <div class="event-meta">
+          <span class="location">📍 <span id="eventLocation">Chargement...</span></span>
+          <span class="date">📅 <span id="eventDate">Chargement...</span></span>
+          <span class="capacity">👥 <span id="eventCapacity">Chargement...</span></span>
+        </div>
 
-        <div class="destination-card" data-title="ouidah" data-country="benin" data-type="culture">
-          <div class="destination-image-container">
-            <img src="images/ouidah.jpg" alt="Ouidah">
-          </div>
-          <div class="destination-details">
-            <h3 class="destination-title">Ouidah</h3>
-            <div class="destination-info">
-              <div class="destination-info-item">📍 Bénin</div>
-              <div class="destination-info-item">🏛️ Patrimoine et histoire</div>
-            </div>
-            <div class="destination-price">À partir de 450€</div>
-            <div class="destination-buttons">
-              <button class="btn-details">Détails</button>
-              <a href="reservation.html" class="btn-reserve">Réserver</a>
-            </div>
+        <span class="eyebrow">À propos</span>
+        <h2>Description de l'événement</h2>
+        <p id="eventDescription">
+          Chargement de la description...
+        </p>
+        <p id="eventDescriptionLongue" style="display: none;"></p>
+
+        <div id="momentsFortsSection" style="display: none;">
+          <span class="eyebrow">Moments forts</span>
+          <h2>Ce qui rend cet événement unique</h2>
+          <div class="moments-forts-container" id="momentsFortsContainer">
+            <!-- Les moments forts seront chargés dynamiquement -->
           </div>
         </div>
 
-        <div class="destination-card" data-title="cotonou" data-country="benin" data-type="urbaine">
-          <div class="destination-image-container">
-            <img src="images/sofitel.webp" alt="Cotonou">
-          </div>
-          <div class="destination-details">
-            <h3 class="destination-title">Cotonou</h3>
-            <div class="destination-info">
-              <div class="destination-info-item">📍 Bénin</div>
-              <div class="destination-info-item">🏙️ Côte & culture urbaine</div>
-            </div>
-            <div class="destination-price">À partir de 400€</div>
-            <div class="destination-buttons">
-              <button class="btn-details">Détails</button>
-              <a href="reservation.html" class="btn-reserve">Réserver</a>
-            </div>
+        <span class="eyebrow">Programme détaillé</span>
+        <h2 id="itineraryTitle">Itinéraire</h2>
+        <div id="itineraryContainer">
+          <!-- L'itinéraire sera chargé dynamiquement -->
+          <div class="loading">
+            <p>Chargement de l'itinéraire...</p>
           </div>
         </div>
 
-        <div class="destination-card" data-title="porto novo" data-country="benin" data-type="culture">
-          <div class="destination-image-container">
-            <img src="images/porto-novo.webp" alt="Porto-Novo">
+        <span class="eyebrow">Services inclus</span>
+        <h2>Ce qui est inclus</h2>
+        <ul id="eventInclusions">
+          <li>Chargement des services inclus...</li>
+        </ul>
+
+        <span class="eyebrow">À prévoir</span>
+        <h2>Ce qui n'est pas inclus</h2>
+        <ul id="eventExclusions">
+          <li>Chargement des services non inclus...</li>
+        </ul>
+
+        <div id="informationsPratiquesSection" style="display: none;">
+          <span class="eyebrow">À savoir avant de partir</span>
+          <h2>Informations pratiques</h2>
+          <div class="highlight-box">
+            <h3>📋 Informations importantes</h3>
+            <p id="eventInformationsPratiques">Chargement...</p>
           </div>
-          <div class="destination-details">
-            <h3 class="destination-title">Porto-Novo</h3>
-            <div class="destination-info">
-              <div class="destination-info-item">📍 Bénin</div>
-              <div class="destination-info-item">🏛️ Architecture et traditions</div>
-            </div>
-            <div class="destination-price">À partir de 420€</div>
-            <div class="destination-buttons">
-              <a href="destination_detail.html"><button class="btn-details">Détails</button></a>
-              <a href="reservation.html" class="btn-reserve">Réserver</a>
-            </div>
+        </div>
+
+        <div id="recommandationsSection" style="display: none;">
+          <div class="highlight-box">
+            <h3>💡 Recommandations</h3>
+            <p id="eventRecommandations">Chargement...</p>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="booking-card">
+      <div class="price-tag">
+        <span class="eyebrow">Tarif</span>
+        <h1 id="eventPrice">0</h1>
+        <p>Par personne</p>
+      </div>
+
+      <div class="booking-info">
+        <div class="info-row">
+          <span class="info-label">⏱️ Durée</span>
+          <span class="info-value" id="eventDuration">Chargement...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">👥 Groupe</span>
+          <span class="info-value" id="eventGroup">Chargement...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🗣️ Langue</span>
+          <span class="info-value" id="eventLanguage">Chargement...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">💪 Difficulté</span>
+          <span class="info-value" id="eventDifficulty">Chargement...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📅 Départ</span>
+          <span class="info-value" id="eventStartDate">Chargement...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🎯 Type</span>
+          <span class="info-value" id="eventCategory">Chargement...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🏛️ Catégorie</span>
+          <span class="info-value" id="eventCategoryFull">Chargement...</span>
+        </div>
+      </div>
+
+      <button class="book-button" id="reserveButton">Réserver maintenant</button>
+
+      <p class="confirmation-note">Confirmation sous 24h</p>
     </div>
   </section>
 
@@ -724,7 +835,9 @@
   </footer>
 
   <script>
-
+    const BASE_URL = 'https://even-travel-backend.onrender.com';
+    
+    // Menu mobile
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
 
@@ -740,59 +853,325 @@
       });
     });
 
-    function observeCards() {
-      const observerOptions = {
-        threshold: 0.15,
-        rootMargin: '0px'
-      };
+    // Mise à jour année
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+    // Récupérer l'ID depuis l'URL
+    function getEventIdFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('id');
+    }
+
+    // Formater la date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+
+    // Formater la date avec heure
+    function formatDateTime(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Traduire la catégorie
+    function translateCategory(category) {
+      const categories = {
+        'concert': 'Concert',
+        'festival': 'Festival',
+        'culture': 'Culturel',
+        'sport': 'Sportif',
+        'excursion': 'Excursion',
+        'formation': 'Formation',
+        'soiree': 'Soirée',
+        'autre': 'Autre'
+      };
+      return categories[category] || category;
+    }
+
+    // Traduire la difficulté
+    function translateDifficulty(difficulty) {
+      const difficulties = {
+        'Très facile': 'Très facile',
+        'Facile': 'Facile',
+        'Modérée': 'Modérée',
+        'Difficile': 'Difficile',
+        'Très difficile': 'Très difficile'
+      };
+      return difficulties[difficulty] || difficulty;
+    }
+
+    // Charger les détails de l'événement
+    async function loadEventDetails() {
+      const eventId = getEventIdFromUrl();
+      
+      if (!eventId) {
+        showErrorMessage("Aucun événement spécifié");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${BASE_URL}/api/v1/events/${eventId}`);
+        
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        const event = result.data?.event || result.data;
+        
+        if (!event) {
+          throw new Error("Événement non trouvé");
+        }
+        
+        // Remplir les données
+        populateEventData(event);
+        
+        // Cacher les loaders
+        document.getElementById('imageLoading').style.display = 'none';
+        document.getElementById('contentLoading').style.display = 'none';
+        document.getElementById('eventContent').style.display = 'block';
+        
+      } catch (error) {
+        console.error('Erreur lors du chargement:', error);
+        showErrorMessage(error.message || "Impossible de charger l'événement");
+      }
+    }
+
+    // Remplir les données dans la page
+    function populateEventData(event) {
+      // Titre
+      document.getElementById('eventTitle').textContent = event.nom || 'Événement';
+      document.title = `${event.nom} - Even Travel`;
+      
+      // Description
+      document.getElementById('eventDescription').textContent = event.description || '';
+      
+      // Description longue (si disponible)
+      if (event.descriptionLongue && event.descriptionLongue.trim() !== '') {
+        document.getElementById('eventDescriptionLongue').textContent = event.descriptionLongue;
+        document.getElementById('eventDescriptionLongue').style.display = 'block';
+      }
+      
+      // Localisation
+      document.getElementById('eventLocation').textContent = event.lieu || 'Non spécifié';
+      
+      // Dates
+      if (event.date) {
+        const startDate = new Date(event.date);
+        document.getElementById('eventStartDate').textContent = formatDateTime(event.date);
+        
+        if (event.dateFin) {
+          const endDate = new Date(event.dateFin);
+          if (startDate.toDateString() !== endDate.toDateString()) {
+            document.getElementById('eventDate').textContent = 
+              `${formatDate(event.date)} - ${formatDate(event.dateFin)}`;
+          } else {
+            document.getElementById('eventDate').textContent = formatDate(event.date);
+          }
+        } else {
+          document.getElementById('eventDate').textContent = formatDate(event.date);
+        }
+      }
+      
+      // Prix
+      if (event.prix) {
+        document.getElementById('eventPrice').textContent = 
+          `${event.prix.toLocaleString('fr-FR')}`;
+      }
+      
+      // Capacité
+      const placesRestantes = event.placesRestantes || 0;
+      const placesTotales = event.placesTotales || 0;
+      document.getElementById('eventCapacity').textContent = 
+        `${placesRestantes} places sur ${placesTotales}`;
+      
+      // Durée
+      if (event.duree) {
+        document.getElementById('eventDuration').textContent = 
+          `${event.duree} jour${event.duree > 1 ? 's' : ''}`;
+      }
+      
+      // Groupe
+      if (event.tailleGroupeMin && event.tailleGroupeMax) {
+        document.getElementById('eventGroup').textContent = 
+          `${event.tailleGroupeMin}-${event.tailleGroupeMax} personnes`;
+      } else if (event.placesTotales) {
+        document.getElementById('eventGroup').textContent = 
+          `Max ${event.placesTotales} personnes`;
+      }
+      
+      // Langue
+      if (event.langues) {
+        const langues = Array.isArray(event.langues) ? event.langues : [event.langues];
+        document.getElementById('eventLanguage').textContent = langues.join(' - ');
+      }
+      
+      // Difficulté
+      if (event.difficulte) {
+        document.getElementById('eventDifficulty').textContent = translateDifficulty(event.difficulte);
+      }
+      
+      // Catégorie
+      if (event.categorie) {
+        document.getElementById('eventCategory').textContent = translateCategory(event.categorie);
+        document.getElementById('eventCategoryFull').textContent = translateCategory(event.categorie);
+      }
+      
+      // Image
+      if (event.images && event.images[0]) {
+        const img = document.getElementById('eventImage');
+        img.src = event.images[0].url;
+        img.alt = event.nom || 'Événement';
+        img.style.display = 'block';
+        document.getElementById('imageLoading').style.display = 'none';
+      }
+      
+      // Services inclus
+      if (event.servicesInclus && event.servicesInclus.length > 0) {
+        const inclusionsList = document.getElementById('eventInclusions');
+        inclusionsList.innerHTML = '';
+        
+        event.servicesInclus.forEach(service => {
+          if (service && service.trim()) {
+            const li = document.createElement('li');
+            li.textContent = service;
+            inclusionsList.appendChild(li);
           }
         });
-      }, observerOptions);
-
-      document.querySelectorAll('.destination-card').forEach(card => {
-        observer.observe(card);
-      });
+      }
+      
+      // Services non inclus
+      if (event.servicesNonInclus && event.servicesNonInclus.length > 0) {
+        const exclusionsList = document.getElementById('eventExclusions');
+        exclusionsList.innerHTML = '';
+        
+        event.servicesNonInclus.forEach(service => {
+          if (service && service.trim()) {
+            const li = document.createElement('li');
+            li.textContent = service;
+            exclusionsList.appendChild(li);
+          }
+        });
+      }
+      
+      // Moments forts
+      if (event.momentsForts && event.momentsForts.length > 0) {
+        const container = document.getElementById('momentsFortsContainer');
+        container.innerHTML = '';
+        
+        event.momentsForts.forEach(moment => {
+          if (moment && moment.trim()) {
+            const card = document.createElement('div');
+            card.className = 'moment-fort-card';
+            card.innerHTML = `
+              <h4>${moment}</h4>
+            `;
+            container.appendChild(card);
+          }
+        });
+        document.getElementById('momentsFortsSection').style.display = 'block';
+      }
+      
+      // Itinéraire
+      if (event.itineraire && event.itineraire.length > 0) {
+        const container = document.getElementById('itineraryContainer');
+        container.innerHTML = '';
+        
+        event.itineraire.sort((a, b) => (a.jour || 0) - (b.jour || 0)).forEach(jour => {
+          const dayElement = document.createElement('div');
+          dayElement.className = 'itinerary-day';
+          
+          let activitiesHtml = '';
+          if (jour.activites && jour.activites.length > 0) {
+            activitiesHtml = `
+              <div class="itinerary-activities">
+                <ul>
+                  ${jour.activites.map(activity => `<li>${activity}</li>`).join('')}
+                </ul>
+              </div>
+            `;
+          }
+          
+          dayElement.innerHTML = `
+            <div class="day-header">
+              <div class="day-number">${jour.jour || '?'}</div>
+              <h3 class="day-title">${jour.titre || `Jour ${jour.jour || '?'}`}</h3>
+            </div>
+            <p>${jour.description || ''}</p>
+            ${activitiesHtml}
+          `;
+          
+          container.appendChild(dayElement);
+        });
+      }
+      
+      // Informations pratiques
+      if (event.informationsPratiques && event.informationsPratiques.trim() !== '') {
+        document.getElementById('eventInformationsPratiques').textContent = event.informationsPratiques;
+        document.getElementById('informationsPratiquesSection').style.display = 'block';
+      }
+      
+      // Recommandations
+      if (event.recommandations && event.recommandations.trim() !== '') {
+        document.getElementById('eventRecommandations').textContent = event.recommandations;
+        document.getElementById('recommandationsSection').style.display = 'block';
+      }
     }
 
-    const searchInput = document.getElementById('searchInput');
-    const countrySelect = document.getElementById('countrySelect');
-    const typeSelect = document.getElementById('typeSelect');
-
-    function liveFilter() {
-      const searchValue = searchInput.value.toLowerCase().trim();
-      const countryValue = countrySelect.value.toLowerCase();
-      const typeValue = typeSelect.value.toLowerCase();
-
-      const destinationCards = document.querySelectorAll('.destination-card');
-
-      destinationCards.forEach(card => {
-        const title = card.dataset.title;
-        const country = card.dataset.country;
-        const type = card.dataset.type;
-
-        const matchSearch = title.includes(searchValue);
-        const matchCountry = countryValue === 'tous les pays' || country === countryValue;
-        const matchType = typeValue === 'type de destination' || type === typeValue;
-
-        if (matchSearch && matchCountry && matchType) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+    // Afficher un message d'erreur
+    function showErrorMessage(message) {
+      const mainContent = document.querySelector('.main-content');
+      if (mainContent) {
+        mainContent.innerHTML = `
+          <div class="error-message" style="
+            text-align: center;
+            padding: 40px;
+            color: #e53e3e;
+            background: #fed7d7;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+          ">
+            <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px;"></i>
+            <h3>Erreur de chargement</h3>
+            <p>${message}</p>
+            <button onclick="window.location.href='events.html'" style="
+              margin-top: 15px;
+              padding: 10px 20px;
+              background: var(--terracotta);
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+            ">Retour aux événements</button>
+          </div>
+        `;
+      }
     }
 
-    searchInput.addEventListener('input', liveFilter);
-    countrySelect.addEventListener('change', liveFilter);
-    typeSelect.addEventListener('change', liveFilter);
+    // Bouton de réservation
+    document.getElementById('reserveButton').addEventListener('click', () => {
+      const eventId = getEventIdFromUrl();
+      if (eventId) {
+        window.location.href = `reservation.html?eventId=${eventId}`;
+      } else {
+        alert('Impossible de procéder à la réservation. Veuillez réessayer.');
+      }
+    });
 
-    window.addEventListener('load', observeCards);
+    // Charger les données au démarrage
+    window.addEventListener('DOMContentLoaded', loadEventDetails);
   </script>
 </body>
 
