@@ -411,7 +411,7 @@
         <form class="login-form" id="loginForm">
             <div class="form-group">
                 <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required autocomplete="username">
+                <input type="text" id="email" name="email" placeholder="Entrez votre nom d'utilisateur" required autocomplete="email">
             </div>
 
             <div class="form-group">
@@ -470,136 +470,77 @@
         </div>
 
         <div class="back-link">
-            <a href="index3.html">← Retour à l'accueil</a>
+            <a href="index.html">← Retour à l'accueil</a>
         </div>
     </div>
 
-    <script>
-        const loginForm = document.getElementById('loginForm');
-        const loginBtn = document.getElementById('loginBtn');
-        const errorMessage = document.getElementById('errorMessage');
-        const successMessage = document.getElementById('successMessage');
-        const changeCredentialsLink = document.getElementById('changeCredentialsLink');
-        const changeForm = document.getElementById('changeForm');
-        const changeCredentialsForm = document.getElementById('changeCredentialsForm');
-        const cancelChange = document.getElementById('cancelChange');
-        const currentUsernameDisplay = document.getElementById('currentUsername');
+<script>
+const loginForm = document.getElementById('loginForm');
+const loginBtn = document.getElementById('loginBtn');
+const errorMessage = document.getElementById('errorMessage');
+const successMessage = document.getElementById('successMessage');
 
-        let ADMIN_CREDENTIALS = JSON.parse(localStorage.getItem('adminCredentials')) || {
-            username: 'admin',
-            password: 'admin123'
-        };
+loginForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-        currentUsernameDisplay.textContent = ADMIN_CREDENTIALS.username;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
 
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = '<span class="loading"></span>Connexion...';
+    errorMessage.style.display = 'none';
+    successMessage.style.display = 'none';
 
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span class="loading"></span>Connexion...';
-
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
-
-            setTimeout(() => {
-                if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                    successMessage.style.display = 'block';
-                    loginForm.reset();
-
-                    setTimeout(() => {
-                        window.location.href = 'admin-dashboard.html';
-                    }, 1500);
-                } else {
-                    errorMessage.style.display = 'block';
-                    loginBtn.disabled = false;
-                    loginBtn.innerHTML = 'Se connecter';
-                    document.getElementById('password').value = '';
-                }
-            }, 1000);
+    try {
+        const response = await fetch('https://even-travel-backend.onrender.com/api/v1/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
         });
 
-        changeCredentialsLink.addEventListener('click', function (e) {
-            e.preventDefault();
-            changeForm.classList.toggle('show');
-            if (changeForm.classList.contains('show')) {
-                currentUsernameDisplay.textContent = ADMIN_CREDENTIALS.username;
-            }
-        });
+        // Gestion du 429 avant tout parsing
+        if (response.status === 429) {
+            throw new Error('Trop de tentatives. Veuillez réessayer dans quelques minutes.');
+        }
 
-        cancelChange.addEventListener('click', function () {
-            changeForm.classList.remove('show');
-            changeCredentialsForm.reset();
-        });
+        // On lit d’abord la réponse comme texte
+        const text = await response.text();
+        let data;
 
-        changeCredentialsForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+        try {
+            data = JSON.parse(text); // parse JSON si possible
+        } catch {
+            throw new Error(text || 'Erreur serveur inattendue'); // sinon on l’affiche brute
+        }
 
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newUsername = document.getElementById('newUsername').value.trim();
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+        if (!response.ok) {
+            throw new Error(data.message || 'Erreur de connexion');
+        }
 
-            if (currentPassword !== ADMIN_CREDENTIALS.password) {
-                alert('Mot de passe actuel incorrect.');
-                return;
-            }
+        // ✅ Succès
+        successMessage.style.display = 'block';
+        console.log('Connexion réussie:', data);
 
-            if (newPassword !== confirmPassword) {
-                alert('Les mots de passe ne correspondent pas.');
-                return;
-            }
+        // Stocker le token JWT
+        localStorage.setItem('authToken', data.token);
 
-            if (newUsername.length < 3) {
-                alert('Le nom d\'utilisateur doit contenir au moins 3 caractères.');
-                return;
-            }
+        setTimeout(() => {
+            window.location.href = 'admin-dashboard.html';
+        }, 1500);
 
-            if (newPassword.length < 6) {
-                alert('Le mot de passe doit contenir au moins 6 caractères.');
-                return;
-            }
+    } catch (error) {
+        errorMessage.textContent = error.message;
+        console.error('Erreur de connexion:', error);
+        errorMessage.style.display = 'block';
+        document.getElementById('password').value = '';
+    } finally {
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = 'Se connecter';
+    }
+});
+</script>
 
-            ADMIN_CREDENTIALS = {
-                username: newUsername,
-                password: newPassword
-            };
 
-            localStorage.setItem('adminCredentials', JSON.stringify(ADMIN_CREDENTIALS));
-
-            changeForm.classList.remove('show');
-            changeCredentialsForm.reset();
-            
-            const tempSuccess = document.createElement('div');
-            tempSuccess.className = 'success-message';
-            tempSuccess.style.display = 'block';
-            tempSuccess.textContent = 'Identifiants mis à jour avec succès !';
-            changeForm.parentNode.insertBefore(tempSuccess, changeForm);
-            
-            setTimeout(() => {
-                tempSuccess.remove();
-            }, 3000);
-
-            currentUsernameDisplay.textContent = ADMIN_CREDENTIALS.username;
-        });
-
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 0.5s ease';
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-
-        document.getElementById('username').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                document.getElementById('password').focus();
-            }
-        });
-    </script>
 </body>
 
 </html>
