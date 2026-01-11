@@ -893,7 +893,7 @@
             <div class="event-price">${formattedPrice}</div>
             <div class="event-buttons">
               <button class="btn-details" onclick="showEventDetails('${event._id}')">Détails</button>
-              <button class="btn-reserve" onclick="reserveEvent('${event._id}')">Réserver</button>
+              <button class="btn-reserve" onclick="reserveEvent('${event._id}', '${event.nom || 'Événement'}')">Réserver</button>
             </div>
           </div>
         `;
@@ -938,9 +938,9 @@
       window.location.href = `event_detail.html?id=${eventId}`;
     }
 
-    function reserveEvent(eventId) {
-      // Rediriger vers la page de réservation avec l'ID
-      window.location.href = `reservation.html?eventId=${eventId}`;
+    function reserveEvent(eventId, eventNom) {
+      // Rediriger vers la page de réservation avec l'ID et le type
+      window.location.href = `reservation.html?type=event&id=${eventId}&nom=${encodeURIComponent(eventNom)}`;
     }
 
     // Animation d'apparition des cartes

@@ -28,6 +28,9 @@
       --spacing-md: 32px;
       --spacing-lg: 64px;
       --spacing-xl: 96px;
+      --success: #4CAF50;
+      --error: #F44336;
+      --warning: #FF9800;
     }
 
     * {
@@ -309,11 +312,30 @@
       transition: all 0.3s ease;
       font-family: 'Inter', sans-serif;
       margin-top: var(--spacing-md);
+      position: relative;
+      overflow: hidden;
     }
 
     .submit-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(184, 133, 106, 0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .submit-btn .spinner {
+      display: none;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .terms {
@@ -364,18 +386,6 @@
 
     .footer-section {
       animation: fadeInUp 0.6s ease-out;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .footer-logo {
@@ -438,6 +448,243 @@
       color: #9ca3af;
     }
 
+    /* Styles ajoutés */
+    .reservation-summary {
+      background: var(--sand);
+      padding: var(--spacing-md);
+      border-radius: 12px;
+      margin-bottom: var(--spacing-lg);
+      border: 1px solid var(--stone);
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .summary-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--deep-brown);
+    }
+
+    .summary-badge {
+      background: var(--terracotta);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .summary-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-sm);
+    }
+
+    .summary-item {
+      margin-bottom: 8px;
+    }
+
+    .summary-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .summary-value {
+      font-size: 15px;
+      color: var(--deep-brown);
+      font-weight: 500;
+    }
+
+    .summary-price {
+      text-align: center;
+      padding: var(--spacing-sm);
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      margin-top: var(--spacing-sm);
+    }
+
+    .summary-price .amount {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+
+    .price-display {
+      background: var(--sand);
+      padding: var(--spacing-md);
+      border-radius: 12px;
+      margin: var(--spacing-lg) 0;
+      border: 1px solid var(--stone);
+      animation: fadeInUp 0.6s ease-out 0.3s backwards;
+    }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .price-item {
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .price-label {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .price-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--deep-brown);
+    }
+
+    .price-total {
+      border-top: 2px solid var(--stone);
+      padding-top: var(--spacing-sm);
+      margin-top: var(--spacing-sm);
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .total-label {
+      font-size: 16px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .total-amount {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+
+    .payment-due {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(184, 133, 106, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: var(--spacing-sm);
+      border: 1px solid var(--terracotta);
+    }
+
+    .payment-due-label {
+      font-size: 16px;
+      color: var(--terracotta);
+      font-weight: 600;
+    }
+
+    .payment-due-amount {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+
+    .error-message {
+      background: rgba(244, 67, 54, 0.1);
+      color: var(--error);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: var(--spacing-md);
+      border: 1px solid var(--error);
+      display: none;
+      animation: fadeInUp 0.3s ease-out;
+    }
+
+    .error-message i {
+      margin-right: 8px;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      display: none;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--stone);
+      border-top-color: var(--terracotta);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .alert-toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 3000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      animation: slideInRight 0.3s ease-out;
+      display: none;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .alert-success {
+      background: var(--success);
+    }
+
+    .alert-error {
+      background: var(--error);
+    }
+
+    .alert-warning {
+      background: var(--warning);
+    }
+
+    .places-warning {
+      background: rgba(255, 152, 0, 0.1);
+      color: var(--warning);
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .places-warning i {
+      margin-right: 6px;
+    }
+
     @media (max-width: 768px) {
       nav {
         padding: 0 20px;
@@ -455,6 +702,14 @@
 
       .form-container {
         padding: var(--spacing-md);
+      }
+
+      .summary-content {
+        grid-template-columns: 1fr;
+      }
+
+      .price-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -474,6 +729,10 @@
       .hero h1 {
         font-size: 36px;
       }
+
+      .container {
+        padding: var(--spacing-md) 0;
+      }
     }
   </style>
 </head>
@@ -484,7 +743,6 @@
       <div class="logo">
         <img src="images/logo-01.png" alt="Even Travel Logo">
       </div>
-
       <ul class="nav-links">
         <li><a href="index.html">Accueil</a></li>
         <li><a href="events.html">Événements</a></li>
@@ -493,7 +751,6 @@
         <li><a href="contact.html">Contact</a></li>
         <li><a href="about.html">À propos</a></li>
         <li><a href="FAQ.html">FAQ</a></li>
-
       </ul>
     </nav>
   </header>
@@ -505,67 +762,127 @@
 
   <div class="container">
     <div class="form-container">
-      <form id="reservationForm">
+      <!-- Toast pour les messages -->
+      <div id="alertToast" class="alert-toast"></div>
 
+      <!-- Overlay de chargement -->
+      <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+      </div>
+
+      <!-- Message d'erreur -->
+      <div id="errorMessage" class="error-message">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="errorText"></span>
+      </div>
+
+      <!-- Résumé de la réservation -->
+      <div id="reservationSummary" class="reservation-summary" style="display: none;">
+        <div class="summary-header">
+          <div class="summary-title" id="summaryTitle">Résumé de votre réservation</div>
+          <div class="summary-badge" id="summaryType">Événement</div>
+        </div>
+        <div class="summary-content">
+          <div class="summary-item">
+            <div class="summary-label">Événement/Destination</div>
+            <div class="summary-value" id="summaryName">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Date</div>
+            <div class="summary-value" id="summaryDate">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Lieu</div>
+            <div class="summary-value" id="summaryLocation">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Prix unitaire</div>
+            <div class="summary-value" id="summaryUnitPrice">-</div>
+          </div>
+        </div>
+        <div class="summary-price">
+          <div class="summary-label">Total pour <span id="summaryParticipants">1</span> personne(s)</div>
+          <div class="amount" id="summaryTotalPrice">-</div>
+        </div>
+      </div>
+
+      <form id="reservationForm">
         <h2 class="section-title">Informations personnelles</h2>
         <div class="form-row">
           <div class="form-group">
             <label>Nom *</label>
-            <input type="text" name="nom" required>
+            <input type="text" name="nom" id="nom" required>
           </div>
           <div class="form-group">
             <label>Prénom *</label>
-            <input type="text" name="prenom" required>
+            <input type="text" name="prenom" id="prenom" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>Email *</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" id="email" required>
           </div>
           <div class="form-group">
             <label>Téléphone *</label>
-            <input type="tel" name="telephone" required>
+            <input type="tel" name="telephone" id="telephone" required>
           </div>
         </div>
+
+        <!-- Champs cachés pour stocker les infos de la réservation -->
+        <input type="hidden" name="type_reservation" id="typeReservation">
+        <input type="hidden" name="reference" id="referenceId">
+        <input type="hidden" name="reference_name" id="referenceName">
+        <input type="hidden" name="reference_date" id="referenceDate">
+        <input type="hidden" name="reference_location" id="referenceLocation">
+        <input type="hidden" name="reference_price" id="referencePrice">
+        <input type="hidden" name="reference_places" id="referencePlaces">
 
         <h2 class="section-title">Détails de la réservation</h2>
         <div class="form-row">
           <div class="form-group">
-            <label>Type de réservation *</label>
-            <select name="type_reservation" required>
-              <option value="">Choisir</option>
-              <option value="evenement">Événement</option>
-              <option value="destination">Destination</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Événement / Destination *</label>
-            <select name="reference" required>
-              <option value="">Sélection à venir</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Date *</label>
-            <input type="date" name="date" required>
-          </div>
-          <div class="form-group">
             <label>Nombre de personnes *</label>
-            <input type="number" name="participants" min="1" value="1" required>
+            <input type="number" name="participants" id="participants" min="1" value="1" required>
+            <div id="placesWarning" class="places-warning" style="display: none;">
+              <i class="fas fa-exclamation-circle"></i>
+              <span id="placesWarningText"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Date de participation *</label>
+            <input type="date" name="date" id="selectedDate" required>
           </div>
         </div>
 
         <div class="form-group">
           <label>Message / Demandes spéciales</label>
-          <textarea name="message" placeholder="Vos demandes particulières, besoins spécifiques..."></textarea>
+          <textarea name="message" id="message" placeholder="Vos demandes particulières, besoins spécifiques..."></textarea>
         </div>
 
-        <input type="hidden" name="reference_id">
+        <!-- Affichage du prix -->
+        <div id="priceDisplay" class="price-display" style="display: none;">
+          <div class="price-grid">
+            <div class="price-item">
+              <div class="price-label">Prix unitaire</div>
+              <div class="price-value" id="displayUnitPrice">-</div>
+            </div>
+            <div class="price-item">
+              <div class="price-label">Nombre de personnes</div>
+              <div class="price-value" id="displayParticipants">1</div>
+            </div>
+          </div>
+          <div class="price-total">
+            <div class="total-row">
+              <div class="total-label">Total</div>
+              <div class="total-amount" id="displayTotalPrice">-</div>
+            </div>
+          </div>
+          <div class="payment-due">
+            <div class="payment-due-label">À payer maintenant</div>
+            <div class="payment-due-amount" id="displayPaymentDue">-</div>
+          </div>
+        </div>
 
         <div class="payment-section">
           <h2 class="section-title">Plan de paiement</h2>
@@ -607,8 +924,10 @@
           </div>
         </div>
 
-        <button type="submit" class="submit-btn">
-          <i class="fas fa-check-circle"></i> Confirmer la réservation
+        <button type="submit" class="submit-btn" id="submitButton">
+          <i class="fas fa-check-circle"></i> 
+          <span id="submitText">Confirmer la réservation</span>
+          <i class="fas fa-spinner spinner" id="submitSpinner"></i>
         </button>
         <p class="terms">En validant, vous acceptez nos conditions générales de vente</p>
       </form>
@@ -664,32 +983,469 @@
   </footer>
 
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Définir l'année du copyright
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+      // API base URL
+      const API_BASE_URL = 'https://even-travel-backend.onrender.com';
 
+      // Fonctions utilitaires
+      function showToast(message, type = 'success') {
+        const toast = document.getElementById('alertToast');
+        toast.textContent = message;
+        toast.className = `alert-toast alert-${type}`;
+        toast.style.display = 'block';
+        
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 5000);
+      }
 
-    function activateBox(selector) {
-      const boxes = document.querySelectorAll(selector);
-      boxes.forEach(b => {
-        b.addEventListener('click', () => {
-          boxes.forEach(x => x.classList.remove('selected'));
-          b.classList.add('selected');
-          b.querySelector('input').checked = true;
+      function showError(message) {
+        const errorEl = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        errorText.textContent = message;
+        errorEl.style.display = 'block';
+        
+        setTimeout(() => {
+          errorEl.style.display = 'none';
+        }, 5000);
+      }
+
+      function showLoading(show = true) {
+        document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+      }
+
+      function setButtonLoading(loading = true) {
+        const button = document.getElementById('submitButton');
+        const spinner = document.getElementById('submitSpinner');
+        const text = document.getElementById('submitText');
+        
+        if (loading) {
+          button.disabled = true;
+          spinner.style.display = 'inline-block';
+          text.textContent = 'Traitement...';
+        } else {
+          button.disabled = false;
+          spinner.style.display = 'none';
+          text.textContent = 'Confirmer la réservation';
+        }
+      }
+
+      // Fonction pour activer les cases
+      function activateBox(selector) {
+        const boxes = document.querySelectorAll(selector);
+        boxes.forEach(b => {
+          b.addEventListener('click', () => {
+            boxes.forEach(x => x.classList.remove('selected'));
+            b.classList.add('selected');
+            b.querySelector('input').checked = true;
+            calculerTotal();
+          });
         });
-      });
-    }
+      }
 
-    activateBox('.payment-options .box-option');
-    activateBox('.payment-methods .box-option');
+      activateBox('.payment-options .box-option');
+      activateBox('.payment-methods .box-option');
 
-    document.getElementById('reservationForm').addEventListener('submit', e => {
+      // Récupérer les paramètres d'URL (support multiple formats)
+      const urlParams = new URLSearchParams(window.location.search);
+      console.log('Paramètres URL:', Object.fromEntries(urlParams.entries()));
+
+      let type, id;
+      
+      // Support des différents formats de paramètres
+      if (urlParams.get('type') && urlParams.get('id')) {
+        type = urlParams.get('type');
+        id = urlParams.get('id');
+      } else if (urlParams.get('eventId')) {
+        type = 'event';
+        id = urlParams.get('eventId');
+      } else if (urlParams.get('destinationId')) {
+        type = 'destination';
+        id = urlParams.get('destinationId');
+      } else if (urlParams.get('type') && urlParams.get('eventId')) {
+        type = urlParams.get('type');
+        id = urlParams.get('eventId');
+      } else if (urlParams.get('type') && urlParams.get('destinationId')) {
+        type = urlParams.get('type');
+        id = urlParams.get('destinationId');
+      }
+
+      console.log('Type détecté:', type);
+      console.log('ID détecté:', id);
+
+      // Charger les détails de la réservation
+      async function chargerDetailsReservation() {
+        if (!type || !id) {
+          showToast('Aucun événement ou destination sélectionné. Redirection...', 'error');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2000);
+          return;
+        }
+
+        showLoading(true);
+
+        try {
+          let endpoint, itemType;
+
+          if (type === 'event') {
+            endpoint = `${API_BASE_URL}/api/v1/events/${id}`;
+            itemType = 'Événement';
+          } else if (type === 'destination') {
+            endpoint = `${API_BASE_URL}/api/v1/destinations/${id}`;
+            itemType = 'Destination';
+          } else {
+            throw new Error('Type de réservation non valide');
+          }
+
+          console.log('Chargement depuis:', endpoint);
+
+          const response = await fetch(endpoint);
+          
+          if (!response.ok) {
+            throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+          }
+
+          const result = await response.json();
+          console.log('Réponse API:', result);
+
+          let item;
+          if (type === 'event') {
+            item = result.data?.event || result.data;
+          } else {
+            item = result.data?.destination || result.data;
+          }
+
+          if (!item) {
+            throw new Error('Élément non trouvé dans la réponse');
+          }
+
+          console.log('Élément chargé:', item);
+
+          // Remplir les champs cachés
+          document.getElementById('typeReservation').value = type;
+          document.getElementById('referenceId').value = item._id;
+          document.getElementById('referenceName').value = item.nom || item.titre;
+          document.getElementById('referencePrice').value = item.prix || 0;
+          
+          // Déterminer les places disponibles
+          let placesDisponibles = 50; // Valeur par défaut
+          if (type === 'event' && item.placesRestantes !== undefined) {
+            placesDisponibles = item.placesRestantes;
+          } else if (type === 'destination' && item.placesDisponibles !== undefined) {
+            placesDisponibles = item.placesDisponibles;
+          }
+          document.getElementById('referencePlaces').value = placesDisponibles;
+
+          // Remplir le lieu
+          const location = item.lieu || item.localisation || 'Non spécifié';
+          document.getElementById('referenceLocation').value = location;
+
+          // Gérer la date
+          let defaultDate = '';
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+
+          if (item.date) {
+            const itemDate = new Date(item.date);
+            if (itemDate >= today) {
+              defaultDate = itemDate.toISOString().split('T')[0];
+            }
+          } else if (item.datesDisponibles && item.datesDisponibles.length > 0) {
+            // Trouver la première date future
+            for (const dateRange of item.datesDisponibles) {
+              const debut = new Date(dateRange.debut);
+              if (debut >= today) {
+                defaultDate = debut.toISOString().split('T')[0];
+                break;
+              }
+            }
+          }
+
+          // Si pas de date trouvée, utiliser aujourd'hui + 7 jours
+          if (!defaultDate) {
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 7);
+            defaultDate = futureDate.toISOString().split('T')[0];
+          }
+
+          document.getElementById('referenceDate').value = defaultDate;
+          document.getElementById('selectedDate').value = defaultDate;
+          
+          // Définir la date minimum comme aujourd'hui
+          const todayStr = today.toISOString().split('T')[0];
+          document.getElementById('selectedDate').min = todayStr;
+
+          // Afficher le résumé
+          afficherResume(item, itemType, defaultDate, placesDisponibles);
+
+          // Activer le calcul du total
+          setupCalculTotal();
+
+          showLoading(false);
+
+        } catch (error) {
+          console.error('Erreur détaillée:', error);
+          showLoading(false);
+          showError(`Impossible de charger les détails: ${error.message}`);
+          
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 3000);
+        }
+      }
+
+      function afficherResume(item, itemType, selectedDate, placesDisponibles) {
+        const summaryEl = document.getElementById('reservationSummary');
+        summaryEl.style.display = 'block';
+
+        const itemName = item.nom || item.titre;
+        const itemLocation = item.lieu || item.localisation || 'Non spécifié';
+        const itemPrice = item.prix || 0;
+
+        document.getElementById('summaryTitle').textContent = `Résumé de votre réservation`;
+        document.getElementById('summaryType').textContent = itemType;
+        document.getElementById('summaryName').textContent = itemName;
+        document.getElementById('summaryLocation').textContent = itemLocation;
+        document.getElementById('summaryUnitPrice').textContent = `${itemPrice.toLocaleString('fr-FR')} FCFA`;
+
+        if (selectedDate) {
+          const dateObj = new Date(selectedDate);
+          document.getElementById('summaryDate').textContent = dateObj.toLocaleDateString('fr-FR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+        }
+
+        // Mettre à jour l'affichage du prix
+        document.getElementById('displayUnitPrice').textContent = `${itemPrice.toLocaleString('fr-FR')} FCFA`;
+        document.getElementById('priceDisplay').style.display = 'block';
+
+        // Avertissement sur les places disponibles
+        updatePlacesWarning(placesDisponibles);
+
+        calculerTotal();
+      }
+
+      function updatePlacesWarning(placesDisponibles) {
+        const warningEl = document.getElementById('placesWarning');
+        const warningText = document.getElementById('placesWarningText');
+        
+        if (placesDisponibles <= 10) {
+          warningText.textContent = `⚠️ Il ne reste que ${placesDisponibles} place${placesDisponibles > 1 ? 's' : ''} disponible${placesDisponibles > 1 ? 's' : ''}`;
+          warningEl.style.display = 'block';
+        } else {
+          warningEl.style.display = 'none';
+        }
+      }
+
+      function setupCalculTotal() {
+        const participantsInput = document.getElementById('participants');
+        const dateInput = document.getElementById('selectedDate');
+
+        participantsInput.addEventListener('input', function() {
+          calculerTotal();
+          // Vérifier les places disponibles
+          const maxPlaces = parseInt(document.getElementById('referencePlaces').value);
+          const participants = parseInt(this.value) || 1;
+          updatePlacesWarning(maxPlaces);
+          
+          if (participants > maxPlaces) {
+            showError(`Maximum ${maxPlaces} place${maxPlaces > 1 ? 's' : ''} disponible${maxPlaces > 1 ? 's' : ''}`);
+          }
+        });
+
+        dateInput.addEventListener('change', function () {
+          document.getElementById('referenceDate').value = this.value;
+          calculerTotal();
+        });
+
+        document.querySelectorAll('input[name="plan"]').forEach(radio => {
+          radio.addEventListener('change', calculerTotal);
+        });
+      }
+
+      function calculerTotal() {
+        const prixUnitaire = parseFloat(document.getElementById('referencePrice').value) || 0;
+        const participants = parseInt(document.getElementById('participants').value) || 1;
+        const plan = document.querySelector('input[name="plan"]:checked').value;
+
+        const total = prixUnitaire * participants;
+        const montantAPayer = plan === 'deux_tranches' ? Math.ceil(total / 2) : total;
+
+        // Mettre à jour le résumé
+        document.getElementById('summaryParticipants').textContent = participants;
+        document.getElementById('summaryTotalPrice').textContent = `${total.toLocaleString('fr-FR')} FCFA`;
+
+        // Mettre à jour l'affichage du prix
+        document.getElementById('displayParticipants').textContent = participants;
+        document.getElementById('displayTotalPrice').textContent = `${total.toLocaleString('fr-FR')} FCFA`;
+        document.getElementById('displayPaymentDue').textContent = `${montantAPayer.toLocaleString('fr-FR')} FCFA`;
+      }
+
+      // Validation du formulaire
+      function validateForm() {
+        const nom = document.getElementById('nom').value.trim();
+        const prenom = document.getElementById('prenom').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const telephone = document.getElementById('telephone').value.trim();
+        const participants = parseInt(document.getElementById('participants').value);
+        const maxPlaces = parseInt(document.getElementById('referencePlaces').value);
+        const date = document.getElementById('selectedDate').value;
+
+        if (!nom || !prenom || !email || !telephone) {
+          showError('Veuillez remplir tous les champs obligatoires');
+          return false;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showError('Veuillez saisir une adresse email valide');
+          return false;
+        }
+
+        if (!/^[\+]?[0-9\s\-\(\)]{8,}$/.test(telephone)) {
+          showError('Veuillez saisir un numéro de téléphone valide');
+          return false;
+        }
+
+        if (participants < 1) {
+          showError('Le nombre de participants doit être au moins 1');
+          return false;
+        }
+
+        if (participants > maxPlaces) {
+          showError(`Désolé, il ne reste que ${maxPlaces} place${maxPlaces > 1 ? 's' : ''} disponible${maxPlaces > 1 ? 's' : ''}`);
+          return false;
+        }
+
+        if (!date) {
+          showError('Veuillez sélectionner une date');
+          return false;
+        }
+
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+          showError('Veuillez sélectionner une date future');
+          return false;
+        }
+
+        return true;
+      }
+
+    // Gestion de la soumission du formulaire
+    document.getElementById('reservationForm').addEventListener('submit', async function (e) {
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target));
-      console.log(data);
-      alert("Réservation enregistrée avec succès ! Vous recevrez une confirmation par email.");
 
+      if (!validateForm()) {
+        return;
+      }
+
+      const participants = parseInt(document.getElementById('participants').value);
+      const maxPlaces = parseInt(document.getElementById('referencePlaces').value);
+
+      if (participants > maxPlaces) {
+        showError(`Désolé, il ne reste que ${maxPlaces} places disponibles.`);
+        return;
+      }
+
+      const formData = new FormData(this);
+      const data = {
+        client: {
+          nom: formData.get('nom'),
+          prenom: formData.get('prenom'),
+          email: formData.get('email'),
+          telephone: formData.get('telephone'),
+        },
+        type: formData.get('type_reservation'),
+        itemId: formData.get('reference'),
+        date: formData.get('date'),
+        nombrePlaces: participants,
+        message: formData.get('message'),
+        planPaiement: formData.get('plan'),
+        methodePaiement: formData.get('methode'),
+      };
+
+      console.log('Données à envoyer:', data);
+
+      // Désactiver le bouton
+      setButtonLoading(true);
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/v1/reservations/initier`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        // Essayez d'abord de lire le texte pour voir ce que le serveur renvoie
+        const responseText = await response.text();
+        console.log('Réponse brute du serveur:', responseText);
+
+        if (!response.ok) {
+          // Essayez de parser comme JSON, sinon utilisez le texte brut
+          let errorMessage = `Erreur ${response.status}: ${response.statusText}`;
+          try {
+            const errorData = JSON.parse(responseText);
+            errorMessage = errorData.message || errorMessage;
+          } catch (e) {
+            errorMessage = responseText || errorMessage;
+          }
+          throw new Error(errorMessage);
+        }
+
+        // Si la réponse est OK, essayez de la parser comme JSON
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (error) {
+          console.error('Erreur de parsing JSON:', error);
+          throw new Error('Le serveur a renvoyé une réponse invalide');
+        }
+
+        console.log('Résultat de la réservation:', result);
+
+        if (result.status === 'success') {
+          // Stocker l'ID de réservation
+          localStorage.setItem('reservationId', result.data.reservation._id);
+          localStorage.setItem('reservationData', JSON.stringify(data));
+
+          showToast(result.message || 'Réservation enregistrée avec succès !', 'success');
+
+          // Rediriger vers l'URL de paiement
+          if (result.data.reservation.paymentUrl) {
+            setTimeout(() => {
+              window.location.href = result.data.reservation.paymentUrl;
+            }, 1000);
+          } else {
+            // Fallback vers la page de paiement interne
+            setTimeout(() => {
+              window.location.href = `paiement.html?id=${result.data.reservation._id}`;
+            }, 2000);
+          }
+        } else {
+          throw new Error(result.message || 'Erreur lors de la réservation');
+        }
+
+      } catch (error) {
+        console.error('Erreur détaillée:', error);
+        showError(error.message || 'Erreur lors de l\'enregistrement de la réservation');
+        setButtonLoading(false);
+      }
+    });   
+    
+    // Initialiser
+      chargerDetailsReservation();
     });
   </script>
 </body>
-
 </html>

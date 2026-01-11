@@ -1164,7 +1164,7 @@
     document.getElementById('reserveButton').addEventListener('click', () => {
       const eventId = getEventIdFromUrl();
       if (eventId) {
-        window.location.href = `reservation.html?eventId=${eventId}`;
+        window.location.href = `reservation.html?type=event&id=${event._id}`;
       } else {
         alert('Impossible de procéder à la réservation. Veuillez réessayer.');
       }

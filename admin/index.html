@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Even Travel - Tableau de Bord Admin</title>
+        
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Marko+One&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+        
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/admin.css">
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <div class="logo">
+                    <span>Even</span><span style="color: var(--deep-brown)">Travel</span>
+                </div>
+                <div class="admin-actions">
+                    <span id="currentUser">Administrateur</span>
+                    <button class="logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <div class="admin-container">
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active" data-section="dashboard"><i class="fas fa-chart-line"></i> Tableau de Bord</a></li>
+                    <li><a href="#" data-section="events"><i class="fas fa-calendar-alt"></i> Événements</a></li>
+                    <li><a href="#" data-section="destinations"><i class="fas fa-map-marked-alt"></i> Destinations</a></li>
+                    <li><a href="#" data-section="blogs"><i class="fas fa-blog"></i> Articles</a></li>
+                    <li><a href="#" data-section="comments"><i class="fas fa-comments"></i> Commentaires</a></li>
+                    <li><a href="#" data-section="payments"><i class="fas fa-credit-card"></i> Paiements</a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <!-- Dashboard par défaut -->
+                <section id="dashboard" class="dashboard-section active">
+                    <div class="section-header">
+                        <h1 class="section-title">Tableau de Bord</h1>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-ticket-alt"></i></div><div class="stat-number" id="totalReservations">0</div><div class="stat-label">Réservations</div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-calendar-check"></i></div><div class="stat-number" id="totalEvents">0</div><div class="stat-label">Événements Actifs</div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-globe-africa"></i></div><div class="stat-number" id="totalDestinations">0</div><div class="stat-label">Destinations</div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fas fa-comment-dots"></i></div><div class="stat-number" id="totalComments">0</div><div class="stat-label">Commentaires</div></div>
+                    </div>
+                </section>
+
+                <!-- Contenu dynamique -->
+                <div id="dynamic-content"></div>
+            </main>
+        </div>
+
+        <!-- MODAL ÉVÉNEMENT -->
+        <div id="eventModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="eventModalTitle" class="modal-title">Ajouter un Événement</h2>
+                    <button class="close-btn" onclick="closeModal('eventModal')">×</button>
+                </div>
+                <form id="eventForm">
+                    <input type="hidden" id="eventId">
+                    
+                    <div class="form-section">
+                        <h3 class="section-title-small">Informations Générales</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventNom">Nom de l'événement *</label>
+                                <input type="text" id="eventNom" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventCategorie">Catégorie *</label>
+                                <select id="eventCategorie" required>
+                                    <option value="concert">Concert</option>
+                                    <option value="festival">Festival</option>
+                                    <option value="culture">Culturel</option>
+                                    <option value="sport">Sportif</option>
+                                    <option value="excursion">Excursion</option>
+                                    <option value="formation">Formation</option>
+                                    <option value="soiree">Soirée</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="eventDescription">Description courte *</label>
+                            <textarea id="eventDescription" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="eventDescriptionLongue">Description longue</label>
+                            <textarea id="eventDescriptionLongue"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="section-title-small">Dates et Lieu</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventDate">Date de début *</label>
+                                <input type="datetime-local" id="eventDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDateFin">Date de fin</label>
+                                <input type="datetime-local" id="eventDateFin">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventDuree">Durée (jours) *</label>
+                                <input type="number" id="eventDuree" min="1" value="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventLieu">Lieu *</label>
+                                <input type="text" id="eventLieu" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-modal-btn" onclick="closeModal('eventModal')">
+                            Annuler
+                        </button>
+                        <button type="submit" class="save-btn">
+                            Enregistrer l'Événement
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL CONFIRMATION -->
+        <div id="confirmModal" class="modal">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h2 class="modal-title">Confirmation</h2>
+                    <button class="close-btn" onclick="closeModal('confirmModal')">×</button>
+                </div>
+                <div class="form-section">
+                    <p id="confirmMessage">Êtes-vous sûr de vouloir effectuer cette action ?</p>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-modal-btn" onclick="closeModal('confirmModal')">
+                        Annuler
+                    </button>
+                    <button type="button" class="save-btn" id="confirmActionBtn" onclick="executeConfirmedAction()">
+                        Confirmer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script src="js/utils.js"></script>
+        <script src="js/admin.js"></script>
+        <script src="js/events.js"></script>
+        <script src="js/destinations.js"></script>
+        <script src="js/blogs.js"></script>
+        <script src="js/comments.js"></script>
+        <script src="js/payments.js"></script>
+        
+        <script>
+            // Initialiser au chargement
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOM chargé, initialisation du tableau de bord...');
+                
+                // Vérifier l'authentification
+                const token = localStorage.getItem("authToken");
+                if (!token) {
+                    console.log("Pas de token, redirection vers login");
+                    window.location.replace("admin-login.html");
+                    return;
+                }
+                
+                console.log("Token trouvé, initialisation...");
+                
+                // Initialiser les événements de navigation
+                if (typeof setupNavigation === 'function') {
+                    setupNavigation();
+                    console.log("Navigation initialisée");
+                }
+                
+                // Charger le dashboard
+                if (typeof loadDashboardData === 'function') {
+                    loadDashboardData();
+                    console.log("Dashboard chargé");
+                }
+                
+                // Initialiser le formulaire d'événement
+                const eventForm = document.getElementById('eventForm');
+                if (eventForm) {
+                    eventForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        if (typeof saveEvent === 'function') {
+                            saveEvent(e);
+                        }
+                    });
+                }
+                
+                // Initialiser le bouton de déconnexion
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.onclick = function() {
+                        if (typeof logout === 'function') {
+                            logout();
+                        }
+                    };
+                }
+            });
+            
+            // Fonctions globales
+            function closeModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove("show");
+                }
+            }
+            
+            function openEventModal(eventId = null) {
+                console.log("Ouverture modal événement:", eventId);
+                
+                const modal = document.getElementById('eventModal');
+                const title = document.getElementById('eventModalTitle');
+                
+                if (modal && title) {
+                    title.textContent = eventId ? "Modifier l'Événement" : "Ajouter un Événement";
+                    document.getElementById("eventId").value = eventId || "";
+                    
+                    const form = document.getElementById("eventForm");
+                    if (form) {
+                        form.reset();
+                    }
+                    
+                    if (eventId && typeof fillEventForm === 'function') {
+                        fillEventForm(eventId);
+                    }
+                    
+                    modal.classList.add("show");
+                    console.log("Modal ouvert avec succès");
+                }
+            }
+        </script>
+    </body>
+</html>
