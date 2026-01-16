@@ -836,6 +836,8 @@
 
   <script>
     const BASE_URL = 'https://even-travel-backend.onrender.com';
+
+    let currentEvent = null;
     
     // Menu mobile
     const hamburger = document.getElementById('hamburger');
@@ -950,6 +952,9 @@
 
     // Remplir les données dans la page
     function populateEventData(event) {
+
+      currentEvent = event
+      
       // Titre
       document.getElementById('eventTitle').textContent = event.nom || 'Événement';
       document.title = `${event.nom} - Even Travel`;
@@ -1159,15 +1164,21 @@
         `;
       }
     }
+    
 
     // Bouton de réservation
     document.getElementById('reserveButton').addEventListener('click', () => {
-      const eventId = getEventIdFromUrl();
-      if (eventId) {
-        window.location.href = `reservation.html?type=event&id=${event._id}`;
-      } else {
-        alert('Impossible de procéder à la réservation. Veuillez réessayer.');
-      }
+        const eventId = getEventIdFromUrl();
+        
+        if (currentEvent && currentEvent._id) {
+            
+            window.location.href = `reservation.html?type=event&id=${currentEvent._id}&nom=${encodeURIComponent(currentEvent.nom || 'Événement')}`;
+        } else if (eventId) {
+          
+            window.location.href = `reservation.html?type=event&id=${eventId}`;
+        } else {
+            alert('Impossible de procéder à la réservation. Veuillez réessayer.');
+        }
     });
 
     // Charger les données au démarrage

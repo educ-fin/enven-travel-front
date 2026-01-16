@@ -1123,8 +1123,6 @@
             throw new Error('Élément non trouvé dans la réponse');
           }
 
-          console.log('Élément chargé:', item);
-
           // Remplir les champs cachés
           document.getElementById('typeReservation').value = type;
           document.getElementById('referenceId').value = item._id;
@@ -1373,8 +1371,6 @@
         methodePaiement: formData.get('methode'),
       };
 
-      console.log('Données à envoyer:', data);
-
       // Désactiver le bouton
       setButtonLoading(true);
 
@@ -1411,8 +1407,6 @@
           console.error('Erreur de parsing JSON:', error);
           throw new Error('Le serveur a renvoyé une réponse invalide');
         }
-
-        console.log('Résultat de la réservation:', result);
 
         if (result.status === 'success') {
           // Stocker l'ID de réservation
