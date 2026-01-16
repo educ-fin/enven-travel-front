@@ -1,5 +1,3 @@
-Avant de passer aux changement faut voir ce qui est ici 
-
 <!doctype html>
 <html lang="fr">
 
@@ -1577,7 +1575,7 @@ Avant de passer aux changement faut voir ce qui est ici
                         </div>
                     </div>
                     <button type="button" class="add-array-btn" onclick="addArrayItem('langues')">
-                        + Ajouter une langue
+                        + Ajouter une langue    
                     </button>
                 </div>
 
@@ -1665,10 +1663,11 @@ Avant de passer aux changement faut voir ce qui est ici
                             </label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="destinationImage">Image principale</label>
-                        <input type="file" id="destinationImage" accept="image/*">
-                    </div>
+                        <div class="form-group">
+                            <label for="destinationImages">Images (max 5, formats: JPG, PNG, WebP)</label>
+                            <input type="file" id="destinationImages" accept="image/*" multiple>
+                            <small>Maintenez Ctrl pour sélectionner plusieurs images</small>
+                        </div>
                 </div>
 
                 <div class="modal-actions">
@@ -1708,6 +1707,7 @@ Avant de passer aux changement faut voir ce qui est ici
                                 <option value="aventure">Aventure</option>
                                 <option value="conseils">Conseils</option>
                                 <option value="evenements">Événements</option>
+                                <option value="autre">Autres</option>
                             </select>
                         </div>
                     </div>
@@ -1741,7 +1741,7 @@ Avant de passer aux changement faut voir ce qui est ici
                     <h3 class="section-title-small">Médias</h3>
                     <div class="form-group">
                         <label for="blogImage">Image principale</label>
-                        <input type="file" id="blogImage" accept="image/*">
+                        <input type="file" id="blogImages" accept="image/*">
                     </div>
                 </div>
 
@@ -1799,6 +1799,11 @@ Avant de passer aux changement faut voir ce qui est ici
     </div>
 
 <script>
+    // Définition de l'URL de base globale
+   // const BASE_URL = "https://even-travel-backend.onrender.com/api/v1";
+    // Alternative pour développement local:
+     const BASE_URL = "http://localhost:5000/api/v1";
+
     (function () {
         const token = localStorage.getItem("authToken");
 
@@ -1813,7 +1818,7 @@ Avant de passer aux changement faut voir ce qui est ici
         blogs: 1,
         comments: 1,
         payments: 1,
-        reservations: 1  // Ajouté
+        reservations: 1
     };
     const itemsPerPage = 10;
 
@@ -1854,7 +1859,7 @@ Avant de passer aux changement faut voir ce qui est ici
             // Réservations
             try {
                 const reservationsResponse = await fetch(
-                    "https://even-travel-backend.onrender.com/api/v1/reservations/stats",
+                    `${BASE_URL}/reservations/stats`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -1873,7 +1878,7 @@ Avant de passer aux changement faut voir ce qui est ici
 
             // Événements
             const eventsResponse = await fetch(
-                "https://even-travel-backend.onrender.com/api/v1/events",
+                `${BASE_URL}/events`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -1890,7 +1895,7 @@ Avant de passer aux changement faut voir ce qui est ici
 
             // Destinations
             const destinationsResponse = await fetch(
-                "https://even-travel-backend.onrender.com/api/v1/destinations",
+                `${BASE_URL}/destinations`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -1907,7 +1912,7 @@ Avant de passer aux changement faut voir ce qui est ici
             // Commentaires
             try {
                 const commentsResponse = await fetch(
-                    "https://even-travel-backend.onrender.com/api/v1/admin/comments",
+                    `${BASE_URL}/admin/comments`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -1935,7 +1940,7 @@ Avant de passer aux changement faut voir ce qui est ici
         loadBlogs();
         loadComments();
         loadPayments();
-        loadReservations(); // Corrigé: ajout de l'appel
+        loadReservations();
     }
 
     // ========== GESTION DES ÉVÉNEMENTS ==========
@@ -1946,7 +1951,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                "https://even-travel-backend.onrender.com/api/v1/events",
+                `${BASE_URL}/events`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -2035,7 +2040,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                `https://even-travel-backend.onrender.com/api/v1/events/${id}`,
+                `${BASE_URL}/events/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -2160,7 +2165,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                "https://even-travel-backend.onrender.com/api/v1/destinations",
+                `${BASE_URL}/destinations`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -2229,7 +2234,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                `https://even-travel-backend.onrender.com/api/v1/destinations/${id}`,
+                `${BASE_URL}/destinations/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -2324,6 +2329,12 @@ Avant de passer aux changement faut voir ce qui est ici
                 });
             }
 
+            // Dans editDestination(), après avoir rempli le formulaire
+            if (destination.images && destination.images.length > 0) {
+                // Vous pouvez afficher un message pour informer l'utilisateur
+                console.log(`Cette destination a ${destination.images.length} images`);
+            }
+
             document.getElementById("destinationModal").classList.add("show");
         } catch (error) {
             console.error("Erreur editDestination:", error);
@@ -2339,7 +2350,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                "https://even-travel-backend.onrender.com/api/v1/admin/articles",
+                `${BASE_URL}/admin/articles`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -2377,8 +2388,8 @@ Avant de passer aux changement faut voir ce qui est ici
                             <td>${new Date(blog.datePublication || blog.createdAt).toLocaleDateString("fr-FR")}</td>
                             <td>${blog.categorie}</td>
                             <td>
-                                <span class="status-badge ${statusClass}">
-                                    ${blog.statut === 'published' ? 'Publié' : 'Brouillon'}
+                                <span class="status-badge ${blog.published ? 'published' : 'draft'}">
+                                ${blog.published ? 'Publié' : 'Brouillon'}
                                 </span>
                             </td>
                             <td>
@@ -2407,7 +2418,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                `https://even-travel-backend.onrender.com/api/v1/articles/${id}`,
+                `${BASE_URL}/admin/articles/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -2446,7 +2457,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                "https://even-travel-backend.onrender.com/api/v1/admin/comments",
+                `${BASE_URL}/admin/comments`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -2518,7 +2529,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                `https://even-travel-backend.onrender.com/api/v1/blog/comments/${id}/approve`,
+                `${BASE_URL}/admin/comments/${id}/approve`,
                 {
                     method: "PATCH",
                     headers: {
@@ -2548,7 +2559,7 @@ Avant de passer aux changement faut voir ce qui est ici
     try {
         const token = localStorage.getItem("authToken");
         const response = await fetch(
-        "https://even-travel-backend.onrender.com/api/v1/reservations",
+        `${BASE_URL}/reservations`,
         {
             headers: {
             Authorization: `Bearer ${token}`,
@@ -2731,21 +2742,22 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const url = id ?
-                `https://even-travel-backend.onrender.com/api/v1/events/${id}` :
-                "https://even-travel-backend.onrender.com/api/v1/events";
+                `${BASE_URL}/events/${id}` :
+                `${BASE_URL}/events`;
 
             const response = await fetch(url, {
                 method: id ? "PATCH" : "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
-                },
+                },  
                 body: formData,
             });
 
             if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || "Erreur lors de l'enregistrement");
+            const text = await response.text();
+            throw new Error(text || "Erreur lors de l'enregistrement");
             }
+
 
             closeModal('eventModal');
             await loadEvents();
@@ -2780,13 +2792,20 @@ Avant de passer aux changement faut voir ce qui est ici
             return;
         }
 
-        // Créer FormData pour les fichiers
+        // Créer FormData
         const formData = new FormData();
 
-        // Ajouter l'image si fournie
-        const imageFile = document.getElementById("destinationImage").files[0];
-        if (imageFile) {
-            formData.append('image', imageFile);
+        // 🔥 CORRECTION : Gérer MULTIPLES images
+        const imageFiles = document.getElementById("destinationImages").files;
+        
+        // Vérifier si on a des nouvelles images
+        if (imageFiles && imageFiles.length > 0) {
+            // Limiter à 5 images maximum
+            const filesCount = Math.min(imageFiles.length, 5);
+            for (let i = 0; i < filesCount; i++) {
+                // 🔥 IMPORTANT : utiliser 'images' comme nom (avec 's') pour correspondre à upload.array('images')
+                formData.append('images', imageFiles[i]);
+            }
         }
 
         // Récupérer les valeurs des tableaux
@@ -2799,70 +2818,82 @@ Avant de passer aux changement faut voir ce qui est ici
         const motsClesInput = document.getElementById("destinationMotsCles").value;
         const motsCles = motsClesInput ? motsClesInput.split(',').map(m => m.trim()).filter(m => m) : [];
 
-        // Créer l'objet de données
-        const destinationData = {
-            titre: document.getElementById("destinationTitre").value,
-            categorie: document.getElementById("destinationCategorie").value,
-            description: document.getElementById("destinationDescription").value,
-            descriptionLongue: document.getElementById("destinationDescriptionLongue").value,
-            localisation: document.getElementById("destinationLocalisation").value,
-            pays: document.getElementById("destinationPays").value,
-            region: document.getElementById("destinationRegion").value,
-            prix: parseInt(document.getElementById("destinationPrix").value) || 0,
-            placesDisponibles: parseInt(document.getElementById("destinationPlacesDisponibles").value) || 50,
-            featured: document.getElementById("destinationFeatured").checked,
-            datesDisponibles: datesDisponibles.filter(date => date.debut && date.fin),
+        // 🔥 CORRECTION : Ajouter chaque champ textuel individuellement
+        formData.append('titre', document.getElementById("destinationTitre").value);
+        formData.append('categorie', document.getElementById("destinationCategorie").value);
+        formData.append('description', document.getElementById("destinationDescription").value);
+        formData.append('descriptionLongue', document.getElementById("destinationDescriptionLongue").value || '');
+        formData.append('localisation', document.getElementById("destinationLocalisation").value);
+        formData.append('pays', document.getElementById("destinationPays").value);
+        formData.append('region', document.getElementById("destinationRegion").value);
+        formData.append('prix', parseInt(document.getElementById("destinationPrix").value) || 0);
+        formData.append('placesDisponibles', parseInt(document.getElementById("destinationPlacesDisponibles").value) || 50);
+        formData.append('featured', document.getElementById("destinationFeatured").checked);
+        
+        formData.append('climat', document.getElementById("destinationClimat").value);
+        formData.append('temperatureMin', parseInt(document.getElementById("destinationTemperatureMin").value) || 25);
+        formData.append('temperatureMax', parseInt(document.getElementById("destinationTemperatureMax").value) || 32);
+        formData.append('devise', document.getElementById("destinationDevise").value);
+        formData.append('aeroport', document.getElementById("destinationAeroport").value);
+        formData.append('fuseauHoraire', document.getElementById("destinationFuseauHoraire").value);
+        formData.append('meilleurePeriode', document.getElementById("destinationMeilleurePeriode").value);
+        formData.append('budgetJournalier', document.getElementById("destinationBudgetJournalier").value);
+        
+        formData.append('experiencesCulturelles', document.getElementById("destinationExperiencesCulturelles").value || '');
+        formData.append('informationsPratiques', document.getElementById("destinationInformationsPratiques").value || '');
+        formData.append('metaDescription', document.getElementById("destinationMetaDescription").value || '');
 
-            // Nouveaux champs
-            climat: document.getElementById("destinationClimat").value,
-            temperatureMin: parseInt(document.getElementById("destinationTemperatureMin").value) || 25,
-            temperatureMax: parseInt(document.getElementById("destinationTemperatureMax").value) || 32,
-            devise: document.getElementById("destinationDevise").value,
-            langues: langues,
-            aeroport: document.getElementById("destinationAeroport").value,
-            fuseauHoraire: document.getElementById("destinationFuseauHoraire").value,
-            meilleurePeriode: document.getElementById("destinationMeilleurePeriode").value,
-            budgetJournalier: document.getElementById("destinationBudgetJournalier").value,
+        // 🔥 CORRECTION : Ajouter les tableaux comme chaînes JSON
+        // Votre serveur utilise parseData() pour les convertir
+        if (datesDisponibles.length > 0) {
+            formData.append('datesDisponibles', JSON.stringify(datesDisponibles.filter(date => date.debut && date.fin)));
+        }
+        if (langues.length > 0) {
+            formData.append('langues', JSON.stringify(langues));
+        }
+        if (sitesVisiter.length > 0) {
+            formData.append('sitesVisiter', JSON.stringify(sitesVisiter));
+        }
+        if (gastronomie.length > 0) {
+            formData.append('gastronomie', JSON.stringify(gastronomie));
+        }
+        if (motsCles.length > 0) {
+            formData.append('motsCles', JSON.stringify(motsCles));
+        }
 
-            // Informations détaillées
-            sitesVisiter: sitesVisiter,
-            experiencesCulturelles: document.getElementById("destinationExperiencesCulturelles").value,
-            gastronomie: gastronomie,
-            informationsPratiques: document.getElementById("destinationInformationsPratiques").value,
-
-            // SEO
-            metaDescription: document.getElementById("destinationMetaDescription").value,
-            motsCles: motsCles
-        };
-
-        // Ajouter les données JSON au FormData
-        formData.append('data', JSON.stringify(destinationData));
+        console.log("FormData à envoyer:");
+        for (let pair of formData.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
+        }
 
         try {
             const token = localStorage.getItem("authToken");
-            const url = id ?
-                `https://even-travel-backend.onrender.com/api/v1/destinations/${id}` :
-                "https://even-travel-backend.onrender.com/api/v1/destinations";
+            const url = id ? `${BASE_URL}/destinations/${id}` : `${BASE_URL}/destinations`;
 
             const response = await fetch(url, {
                 method: id ? "PATCH" : "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
+                    // NE PAS mettre Content-Type pour FormData
                 },
                 body: formData,
             });
 
             if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || "Erreur lors de l'enregistrement");
+                const errorText = await response.text();
+                console.error("Erreur du serveur:", errorText);
+                throw new Error(`Erreur ${response.status}: ${errorText}`);
             }
+
+            const result = await response.json();
+            console.log("Réponse du serveur:", result);
 
             closeModal('destinationModal');
             await loadDestinations(currentPage.destinations);
             updateStats();
             alert(`Destination ${id ? 'modifiée' : 'ajoutée'} avec succès!`);
         } catch (error) {
-            console.error("Erreur saveDestination:", error);
+            console.error("Erreur détaillée saveDestination:", error);
             alert("Erreur lors de l'enregistrement: " + error.message);
         }
     }
@@ -2890,34 +2921,42 @@ Avant de passer aux changement faut voir ce qui est ici
             return;
         }
 
-        // Créer FormData pour les fichiers
+        // Créer FormData
         const formData = new FormData();
 
-        // Ajouter l'image si fournie
-        const imageFile = document.getElementById("blogImage").files[0];
-        if (imageFile) {
-            formData.append('image', imageFile);
+        // Ajouter les images (IMPORTANT : nom "images")
+        const imageFiles = document.getElementById("blogImages").files;
+        for (let i = 0; i < imageFiles.length; i++) {
+            formData.append('images', imageFiles[i]);
         }
 
         // Créer l'objet de données
         const blogData = {
             titre: document.getElementById("blogTitre").value,
-            categorie: document.getElementById("blogCategorie").value,
-            auteur: document.getElementById("blogAuteur").value,
-            statut: document.getElementById("blogStatut").value,
-            descriptionCourte: document.getElementById("blogDescriptionCourte").value,
             contenu: document.getElementById("blogContenu").value,
-            datePublication: document.getElementById("blogStatut").value === 'published' ? new Date().toISOString() : null,
+            auteur: document.getElementById("blogAuteur").value,
+            categorie:document.getElementById("blogCategorie").value,
+            published: document.getElementById("blogStatut").value === 'published'
         };
 
-        // Ajouter les données JSON au FormData
-        formData.append('data', JSON.stringify(blogData));
+        // AJOUTER LES CHAMPS DIRECTEMENT AU FormData (pas besoin de JSON)
+        formData.append('titre', blogData.titre);
+        formData.append('contenu', blogData.contenu);
+        formData.append('auteur', blogData.auteur);
+        formData.append('categorie', blogData.categorie);
+        formData.append('published', blogData.published);
 
         try {
             const token = localStorage.getItem("authToken");
             const url = id ?
-                `https://even-travel-backend.onrender.com/api/v1/blog/articles/${id}` :
-                "https://even-travel-backend.onrender.com/api/v1/blog/articles";
+                `${BASE_URL}/admin/articles/${id}` :
+                `${BASE_URL}/admin/articles`;
+
+            console.log("Envoi de la requête avec FormData:", {
+                titre: blogData.titre,
+                auteur: blogData.auteur,
+                nombreImages: imageFiles.length
+            });
 
             const response = await fetch(url, {
                 method: id ? "PATCH" : "POST",
@@ -2927,16 +2966,27 @@ Avant de passer aux changement faut voir ce qui est ici
                 body: formData,
             });
 
+            const responseText = await response.text();
+            console.log("Réponse brute:", responseText);
+
             if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || "Erreur lors de l'enregistrement");
+                throw new Error(`Erreur ${response.status}: ${responseText}`);
+            }
+
+            // Essayer de parser le JSON
+            try {
+                const result = JSON.parse(responseText);
+                console.log("Réponse JSON:", result);
+            } catch (e) {
+                console.log("Réponse non-JSON:", responseText);
             }
 
             closeModal('blogModal');
             await loadBlogs(currentPage.blogs);
+            updateStats();
             alert(`Article ${id ? 'modifié' : 'ajouté'} avec succès!`);
         } catch (error) {
-            console.error("Erreur saveBlog:", error);
+            console.error("Erreur détaillée saveBlog:", error);
             alert("Erreur lors de l'enregistrement: " + error.message);
         }
     }
@@ -2974,23 +3024,23 @@ Avant de passer aux changement faut voir ce qui est ici
 
             switch (type) {
                 case 'event':
-                    url = `https://even-travel-backend.onrender.com/api/v1/events/${id}`;
+                    url = `${BASE_URL}/events/${id}`;
                     method = "DELETE";
                     break;
                 case 'destination':
-                    url = `https://even-travel-backend.onrender.com/api/v1/destinations/${id}`;
+                    url = `${BASE_URL}/destinations/${id}`;
                     method = "DELETE";
                     break;
                 case 'blog':
-                    url = `https://even-travel-backend.onrender.com/api/v1/blog/articles/${id}`;
+                    url = `${BASE_URL}/admin/articles/${id}`;
                     method = "DELETE";
                     break;
                 case 'comment':
-                    url = `https://even-travel-backend.onrender.com/api/v1/blog/comments/${id}`;
+                    url = `${BASE_URL}/admin/comments/${id}`;
                     method = "DELETE";
                     break;
                 case 'reservation':
-                    url = `https://even-travel-backend.onrender.com/api/v1/reservations/${id}`;
+                    url = `${BASE_URL}/reservations/${id}`;
                     method = "DELETE";
                     break;
                 default:
@@ -3479,7 +3529,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                "https://even-travel-backend.onrender.com/api/v1/reservations",
+                `${BASE_URL}/reservations`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -3600,7 +3650,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                `https://even-travel-backend.onrender.com/api/v1/reservations/${id}`,
+                `${BASE_URL}/reservations/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -3663,7 +3713,7 @@ Avant de passer aux changement faut voir ce qui est ici
             if (reservation.itemId) {
                 try {
                     const itemResponse = await fetch(
-                        `https://even-travel-backend.onrender.com/api/v1/${reservation.type === 'event' ? 'events' : 'destinations'}/${reservation.itemId}`,
+                        `${BASE_URL}/${reservation.type === 'event' ? 'events' : 'destinations'}/${reservation.itemId}`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
@@ -3726,7 +3776,7 @@ Avant de passer aux changement faut voir ce qui est ici
         try {
             const token = localStorage.getItem("authToken");
             const response = await fetch(
-                `https://even-travel-backend.onrender.com/api/v1/reservations/${id}/status`,
+                `${BASE_URL}/reservations/${id}/status`,
                 {
                     method: "PATCH",
                     headers: {

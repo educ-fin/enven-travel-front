@@ -254,100 +254,210 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--spacing-md);
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: var(--spacing-lg);
     }
 
+    /* NOUVEAU STYLE POUR LES CARTES */
     .card {
       background: var(--white);
       border: 1px solid var(--stone);
+      border-radius: 16px;
       overflow: hidden;
-      transition: all 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: pointer;
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      transform: translateY(-12px);
+      box-shadow: 0 20px 60px rgba(139, 111, 71, 0.15);
+      border-color: var(--ochre);
     }
 
-    .card img {
+    .card-image-container {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+    }
+
+    .card-image {
       width: 100%;
-      height: 250px;
+      height: 100%;
       object-fit: cover;
-      transition: transform 0.6s ease;
+      transition: transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
     }
 
-    .card:hover img {
-      transform: scale(1.08);
+    .card:hover .card-image {
+      transform: scale(1.15);
+    }
+
+    .card-category {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--bronze);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    .card-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+      z-index: 1;
     }
 
     .card-content {
-      padding: var(--spacing-md);
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .card h3 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
       color: var(--deep-brown);
-      margin-bottom: var(--spacing-sm);
+      margin-bottom: 12px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .card p {
       color: var(--text-muted);
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.6;
-      margin-bottom: var(--spacing-sm);
+      margin-bottom: 16px;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: var(--spacing-sm);
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--stone);
+    }
+
+    .card-author {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .author-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--terracotta), var(--ochre));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .card-author-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-author-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--deep-brown);
     }
 
     .card-date {
-      font-size: 13px;
+      font-size: 11px;
       color: var(--text-muted);
     }
 
     .read-more {
       color: var(--terracotta);
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 6px;
       transition: all 0.3s ease;
+      padding: 8px 16px;
+      border: 1px solid var(--terracotta);
+      border-radius: 20px;
+      background: rgba(184, 133, 106, 0.05);
     }
 
     .read-more:hover {
-      color: var(--bronze);
-      gap: 10px;
+      background: var(--terracotta);
+      color: white;
+      gap: 8px;
+      transform: translateX(4px);
     }
 
+    /* STYLES POUR LA VUE ARTICLE */
     .article-view {
       max-width: 900px;
       margin: 0 auto;
       background: var(--white);
-      padding: var(--spacing-lg);
+      padding: var(--spacing-xl);
+      border-radius: 16px;
       border: 1px solid var(--stone);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .article-hero {
+      margin-bottom: var(--spacing-lg);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      height: 400px;
     }
 
     .article-hero img {
       width: 100%;
-      height: 400px;
+      height: 100%;
       object-fit: cover;
-      margin-bottom: var(--spacing-md);
+    }
+
+    .article-hero-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
     }
 
     .article-view h1 {
       font-size: 36px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--deep-brown);
       margin-bottom: var(--spacing-sm);
+      line-height: 1.3;
     }
 
     .article-meta {
@@ -356,19 +466,114 @@
       align-items: center;
       padding-bottom: var(--spacing-md);
       margin-bottom: var(--spacing-md);
-      border-bottom: 1px solid var(--stone);
+      border-bottom: 2px solid var(--stone);
       font-size: 14px;
       color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+    }
+
+    .article-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .article-tag {
+      padding: 4px 12px;
+      background: var(--sand);
+      color: var(--bronze);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 20px;
     }
 
     .article-body {
       font-size: 17px;
       line-height: 1.8;
-      color: var(--text-muted);
+      color: var(--text-dark);
     }
 
     .article-body p {
       margin-bottom: var(--spacing-md);
+    }
+
+    .article-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* MODAL POUR LES IMAGES */
+    .image-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .image-modal.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(0, 0, 0, 0.8);
     }
 
     .comments {
@@ -385,36 +590,52 @@
     }
 
     .comment-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-sm);
       background: var(--white);
       padding: var(--spacing-md);
       border: 1px solid var(--stone);
+      border-radius: 12px;
       margin-bottom: var(--spacing-md);
+      display: grid;
+      gap: var(--spacing-sm);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-sm);
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
     }
 
     .comment-form input,
     .comment-form textarea {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 16px;
       border: 1px solid var(--stone);
-      border-radius: 0;
+      border-radius: 8px;
       font-size: 15px;
       font-family: 'Inter', sans-serif;
       outline: none;
       transition: all 0.3s ease;
+      background: var(--cream);
     }
 
     .comment-form input:focus,
     .comment-form textarea:focus {
       border-color: var(--terracotta);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(184, 133, 106, 0.1);
     }
 
     .comment-form textarea {
       grid-column: 1 / -1;
-      min-height: 120px;
+      min-height: 140px;
       resize: vertical;
+      line-height: 1.6;
     }
 
     .comment-form input[type="file"] {
@@ -425,12 +646,13 @@
     .comment-actions {
       display: flex;
       gap: 12px;
-      justify-content: flex-end;
+      justify-content: space-between;
       margin-bottom: var(--spacing-lg);
+      flex-wrap: wrap;
     }
 
     .btn {
-      padding: 12px 24px;
+      padding: 14px 28px;
       border: none;
       font-size: 14px;
       font-weight: 600;
@@ -438,16 +660,22 @@
       transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn.primary {
-      background: var(--terracotta);
+      background: linear-gradient(135deg, var(--terracotta), var(--ochre));
       color: white;
+      box-shadow: 0 4px 12px rgba(184, 133, 106, 0.3);
     }
 
     .btn.primary:hover {
-      background: var(--bronze);
+      background: linear-gradient(135deg, var(--bronze), var(--terracotta));
       transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(184, 133, 106, 0.4);
     }
 
     .btn.secondary {
@@ -459,6 +687,7 @@
     .btn.secondary:hover {
       background: var(--bronze);
       color: white;
+      transform: translateY(-2px);
     }
 
     .comment-list {
@@ -472,6 +701,13 @@
       padding: var(--spacing-md);
       border: 1px solid var(--stone);
       border-left: 4px solid var(--terracotta);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .comment-item:hover {
+      border-color: var(--ochre);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     .comment-item.approved {
@@ -483,32 +719,50 @@
       opacity: 0.8;
     }
 
-    .comment-item .meta {
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .comment-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sand), var(--stone));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-brown);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .comment-meta {
+      flex-grow: 1;
+    }
+
+    .comment-name {
       font-weight: 600;
       color: var(--deep-brown);
-      margin-bottom: var(--spacing-xs);
+      margin-bottom: 4px;
     }
 
-    .comment-item .meta small {
-      font-weight: 400;
+    .comment-date {
+      font-size: 12px;
       color: var(--text-muted);
-      margin-left: 8px;
     }
 
-    .comment-item .text {
-      color: var(--text-muted);
+    .comment-text {
+      color: var(--text-dark);
       line-height: 1.6;
-    }
-
-    .comment-item img {
-      max-width: 200px;
-      margin-top: var(--spacing-sm);
-      border: 1px solid var(--stone);
+      padding-left: 52px;
     }
 
     .comment-status {
       display: inline-block;
-      padding: 2px 8px;
+      padding: 4px 10px;
       border-radius: 12px;
       font-size: 11px;
       font-weight: 600;
@@ -534,12 +788,13 @@
       padding: var(--spacing-xl);
       text-align: center;
       color: var(--text-muted);
+      grid-column: 1 / -1;
     }
 
     .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid var(--stone);
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--stone);
       border-top-color: var(--terracotta);
       border-radius: 50%;
       animation: spin 1s linear infinite;
@@ -551,23 +806,36 @@
     }
 
     .error-message {
-      background: #fee;
+      background: #ffeaea;
       color: #c33;
       padding: var(--spacing-md);
-      border: 1px solid #fcc;
-      border-radius: 8px;
+      border: 2px solid #ffcaca;
+      border-radius: 12px;
       margin: var(--spacing-md) 0;
       text-align: center;
+      grid-column: 1 / -1;
     }
 
     .success-message {
-      background: #d4edda;
-      color: #155724;
+      background: #e8f5e9;
+      color: #2e7d32;
       padding: var(--spacing-md);
-      border: 1px solid #c3e6cb;
-      border-radius: 8px;
+      border: 2px solid #c8e6c9;
+      border-radius: 12px;
       margin: var(--spacing-md) 0;
       text-align: center;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .no-articles {
@@ -576,23 +844,35 @@
       padding: var(--spacing-xl);
       color: var(--text-muted);
       font-size: 18px;
+      background: var(--white);
+      border: 1px solid var(--stone);
+      border-radius: 16px;
     }
 
-    .card-category {
-      display: inline-block;
-      padding: 4px 12px;
-      background: var(--sand);
-      color: var(--bronze);
-      font-size: 12px;
-      font-weight: 600;
-      border-radius: 20px;
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: var(--spacing-xl);
+      color: var(--text-muted);
+    }
+
+    .empty-icon {
+      font-size: 64px;
+      color: var(--stone);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .empty-state h3 {
+      color: var(--text-muted);
       margin-bottom: var(--spacing-sm);
     }
 
+    /* FOOTER */
     footer {
       background: #bab2b2;
       color: rgb(0, 0, 0);
       padding: 60px 40px 20px;
+      margin-top: var(--spacing-xl);
     }
 
     .footer-content {
@@ -613,7 +893,6 @@
         opacity: 0;
         transform: translateY(20px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
@@ -680,26 +959,14 @@
       color: #9ca3af;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-
     @media (max-width: 900px) {
       .hero h1 {
         font-size: 42px;
       }
 
       .grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: var(--spacing-md);
       }
     }
 
@@ -733,8 +1000,31 @@
         padding: var(--spacing-lg) 20px;
       }
 
-      .comment-form {
-        grid-template-columns: 1fr;
+      .toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+      }
+
+      .article-view {
+        padding: var(--spacing-md);
+      }
+
+      .article-hero {
+        height: 300px;
+      }
+
+      .article-view h1 {
+        font-size: 28px;
+      }
+
+      .comment-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
       }
     }
 
@@ -762,6 +1052,14 @@
 
       .section-title {
         font-size: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-image-container {
+        height: 200px;
       }
     }
   </style>
@@ -830,6 +1128,14 @@
     </section>
   </main>
 
+  <!-- Modal pour les images -->
+  <div class="image-modal" id="imageModal">
+    <div class="modal-close" onclick="closeImageModal()">×</div>
+    <div class="modal-content">
+      <img class="modal-image" id="modalImage" alt="Image">
+    </div>
+  </div>
+
   <footer>
     <div class="footer-content">
       <div class="footer-section">
@@ -886,31 +1192,58 @@
       navLinks.classList.toggle('active');
     });
 
+    // Fonction pour fermer le modal
+    function closeImageModal() {
+      document.getElementById('imageModal').classList.remove('active');
+    }
+
     // Fonction utilitaire pour formater la date
     function formatDate(dateString) {
       const date = new Date(dateString);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      
+      if (diffDays === 0) {
+        return "Aujourd'hui";
+      } else if (diffDays === 1) {
+        return "Hier";
+      } else if (diffDays < 7) {
+        return `Il y a ${diffDays} jours`;
+      }
+      
       return date.toLocaleDateString('fr-FR', {
         year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+        month: 'short',
+        day: 'numeric'
       });
     }
 
     // Fonction pour créer un extrait de contenu
-    function createExcerpt(content, maxLength = 150) {
-      const plainText = content.replace(/<[^>]*>/g, '');
+    function createExcerpt(content, maxLength = 120) {
+      const plainText = content.replace(/<[^>]*>/g, '').trim();
       if (plainText.length <= maxLength) return plainText;
-      return plainText.substring(0, maxLength) + '...';
+      return plainText.substring(0, maxLength).trim() + '...';
+    }
+
+    // Fonction pour obtenir la première lettre d'un nom pour l'avatar
+    function getInitials(name) {
+      if (!name) return 'A';
+      return name.charAt(0).toUpperCase();
     }
 
     // Fonction pour obtenir l'image d'un article
     function getArticleImage(article) {
-      // Si l'article a des images, utiliser la première
-      if (article.images && article.images.length > 0) {
-        return article.images[0];
+      // Si l'article a des images, utiliser la première URL
+      if (article.images && article.images.length > 0 && article.images[0].url) {
+        const cloudinaryUrl = article.images[0].url;
+        // Optimiser l'image Cloudinary
+        if (cloudinaryUrl.includes('cloudinary.com')) {
+          return cloudinaryUrl.replace('/upload/', '/upload/w_800,h_450,c_fill/q_auto/');
+        }
+        return cloudinaryUrl;
       }
+      
       // Sinon, utiliser une image par défaut basée sur la catégorie
       const defaultImages = {
         festival: 'images/musi.jpg',
@@ -928,10 +1261,17 @@
 
     // Fonction pour déterminer la catégorie d'un article
     function getArticleCategory(article) {
-      // Ici, vous pouvez implémenter la logique pour déterminer la catégorie
-      // Basé sur le titre, le contenu, ou un champ spécifique si disponible
-      // Pour l'instant, on retourne une catégorie par défaut
-      return 'culture';
+      // Extraire la catégorie du titre ou du contenu
+      const title = (article.titre || '').toLowerCase();
+      const content = (article.contenu || '').toLowerCase();
+      
+      if (title.includes('festival') || content.includes('festival')) return 'festival';
+      if (title.includes('exposition') || content.includes('exposition')) return 'exposition';
+      if (title.includes('conférence') || content.includes('conférence')) return 'conference';
+      if (title.includes('voyage') || content.includes('voyage')) return 'voyage';
+      if (title.includes('culture') || content.includes('culture')) return 'culture';
+      
+      return 'culture'; // Catégorie par défaut
     }
 
     // Fonction pour charger les articles depuis l'API
@@ -958,6 +1298,13 @@
         
         if (data.status === 'success' && data.data && data.data.articles) {
           articles = data.data.articles;
+          
+          // Trier par date (plus récent en premier)
+          articles.sort((a, b) => {
+            const dateA = new Date(a.publishedAt || a.createdAt);
+            const dateB = new Date(b.publishedAt || b.createdAt);
+            return dateB - dateA;
+          });
           
           // Extraire les catégories uniques
           categories.clear();
@@ -1014,7 +1361,11 @@
       if (articles.length === 0) {
         cardsEl.innerHTML = `
           <div class="no-articles">
-            <p>Aucun article disponible pour le moment.</p>
+            <div class="empty-state">
+              <div class="empty-icon">📝</div>
+              <h3>Aucun article disponible</h3>
+              <p>Revenez bientôt pour découvrir nos nouveaux articles !</p>
+            </div>
           </div>
         `;
         return;
@@ -1028,7 +1379,11 @@
       if (filteredArticles.length === 0) {
         cardsEl.innerHTML = `
           <div class="no-articles">
-            <p>Aucun article dans la catégorie "${filter}".</p>
+            <div class="empty-state">
+              <div class="empty-icon">🔍</div>
+              <h3>Aucun article dans cette catégorie</h3>
+              <p>Essayez une autre catégorie ou revenez plus tard.</p>
+            </div>
           </div>
         `;
         return;
@@ -1041,19 +1396,32 @@
         const imageUrl = getArticleImage(article);
         const excerpt = createExcerpt(article.contenu || '');
         const formattedDate = formatDate(article.publishedAt || article.createdAt);
+        const authorInitials = getInitials(article.auteur);
         
         const card = document.createElement('article');
         card.className = 'card';
         card.dataset.id = article._id;
         card.innerHTML = `
-          <img src="${imageUrl}" alt="${article.titre || 'Article'}">
-          <div class="card-content">
+          <div class="card-image-container">
             <span class="card-category">${capitalize(category)}</span>
+            <img src="${imageUrl}" alt="${article.titre || 'Article'}" class="card-image" loading="lazy">
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card-content">
             <h3>${escapeHtml(article.titre || 'Sans titre')}</h3>
             <p>${escapeHtml(excerpt)}</p>
             <div class="card-footer">
-              <span class="card-date">${formattedDate} • Par ${escapeHtml(article.auteur || 'Anonyme')}</span>
-              <a href="#/article/${article.slug}" class="read-more">Lire la suite →</a>
+              <div class="card-author">
+                <div class="author-avatar">${authorInitials}</div>
+                <div class="card-author-info">
+                  <div class="card-author-name">${escapeHtml(article.auteur || 'Anonyme')}</div>
+                  <div class="card-date">${formattedDate}</div>
+                </div>
+              </div>
+              <a href="#/article/${article.slug}" class="read-more">
+                Lire
+                <i class="fas fa-arrow-right"></i>
+              </a>
             </div>
           </div>
         `;
@@ -1170,31 +1538,43 @@
           <article class="article-view">
             <div class="article-hero">
               <img src="${imageUrl}" alt="${article.titre || 'Article'}">
+              <div class="article-hero-overlay"></div>
             </div>
             <h1>${escapeHtml(article.titre || 'Sans titre')}</h1>
             <div class="article-meta">
-              <div>
-                ${formattedDate} • ${capitalize(category)} • Par ${escapeHtml(article.auteur || 'Anonyme')}
+              <div class="article-tags">
+                <span class="article-tag">${capitalize(category)}</span>
+                <span class="article-tag">${formattedDate}</span>
+                <span class="article-tag">${escapeHtml(article.auteur || 'Anonyme')}</span>
               </div>
-              <div>Partagez vos impressions ci-dessous</div>
+              <div style="color: var(--terracotta); font-size: 13px; font-weight: 600;">
+                <i class="fas fa-comment"></i> ${comments.length} commentaire${comments.length !== 1 ? 's' : ''}
+              </div>
             </div>
             <div class="article-body">
               ${article.contenu || '<p>Contenu non disponible.</p>'}
-              <div id="gallery-${article._id}" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"></div>
+              <div id="gallery-${article._id}" class="article-gallery"></div>
             </div>
 
             <section class="comments">
               <h3>Commentaires (${comments.length})</h3>
               <form id="commentForm" class="comment-form">
-                <input id="c_name" placeholder="Votre nom *" required />
+                <div class="form-row">
+                  <input id="c_name" placeholder="Votre nom *" required />
+                  <input id="c_email" type="email" placeholder="Votre email (optionnel)" />
+                </div>
                 <textarea id="c_message" placeholder="Votre commentaire *" required></textarea>
-                <div style="grid-column: 1 / -1; font-size: 14px; color: var(--text-muted);">
-                  <p><small>Votre commentaire sera soumis à modération avant publication.</small></p>
+                <div style="grid-column: 1 / -1; font-size: 14px; color: var(--text-muted); padding-top: 8px;">
+                  <p><small><i class="fas fa-info-circle"></i> Votre commentaire sera soumis à modération avant publication.</small></p>
                 </div>
               </form>
               <div class="comment-actions">
-                <button class="btn secondary" id="backBtn">Retour aux articles</button>
-                <button class="btn primary" id="postBtn">Publier le commentaire</button>
+                <button class="btn secondary" id="backBtn">
+                  <i class="fas fa-arrow-left"></i> Retour aux articles
+                </button>
+                <button class="btn primary" id="postBtn">
+                  <i class="fas fa-paper-plane"></i> Publier le commentaire
+                </button>
               </div>
               <div id="commentList" class="comment-list"></div>
             </section>
@@ -1204,12 +1584,17 @@
         // Afficher les images supplémentaires de l'article
         const galleryEl = document.getElementById(`gallery-${article._id}`);
         if (article.images && article.images.length > 1) {
-          article.images.slice(1).forEach(image => {
+          article.images.slice(1).forEach((image, index) => {
             const img = document.createElement('img');
-            img.src = image;
-            img.style.width = '200px';
-            img.style.height = '140px';
-            img.style.objectFit = 'cover';
+            img.src = image.url;
+            img.alt = `${article.titre} - Image ${index + 2}`;
+            img.className = 'gallery-image';
+            
+            img.addEventListener('click', () => {
+              document.getElementById('modalImage').src = image.url;
+              document.getElementById('imageModal').classList.add('active');
+            });
+            
             galleryEl.appendChild(img);
           });
         }
@@ -1231,7 +1616,7 @@
             <p>Impossible de charger l'article. Veuillez réessayer plus tard.</p>
             <p><small>Erreur: ${error.message}</small></p>
             <button class="btn secondary" onclick="showList()" style="margin-top: 16px;">
-              Retour aux articles
+              <i class="fas fa-arrow-left"></i> Retour aux articles
             </button>
           </div>
         `;
@@ -1248,8 +1633,10 @@
       
       if (comments.length === 0) {
         commentList.innerHTML = `
-          <div style="text-align: center; padding: var(--spacing-md); color: var(--text-muted);">
-            <p>Aucun commentaire pour le moment. Soyez le premier à laisser votre avis !</p>
+          <div class="empty-state" style="padding: var(--spacing-md);">
+            <div class="empty-icon">💬</div>
+            <h3 style="color: var(--text-muted); margin-bottom: 8px;">Aucun commentaire pour le moment</h3>
+            <p style="color: var(--text-muted);">Soyez le premier à laisser votre avis !</p>
           </div>
         `;
         return;
@@ -1260,8 +1647,10 @@
       
       if (approvedComments.length === 0) {
         commentList.innerHTML = `
-          <div style="text-align: center; padding: var(--spacing-md); color: var(--text-muted);">
-            <p>Aucun commentaire publié pour le moment. Les commentaires sont en attente de modération.</p>
+          <div class="empty-state" style="padding: var(--spacing-md);">
+            <div class="empty-icon">⏳</div>
+            <h3 style="color: var(--text-muted); margin-bottom: 8px;">Commentaires en modération</h3>
+            <p style="color: var(--text-muted);">Les commentaires sont en attente de validation par notre équipe.</p>
           </div>
         `;
         return;
@@ -1269,15 +1658,22 @@
       
       approvedComments.forEach(comment => {
         const formattedDate = formatDate(comment.createdAt);
+        const initials = getInitials(comment.nom);
+        
         const commentEl = document.createElement('div');
         commentEl.className = 'comment-item approved';
         commentEl.innerHTML = `
-          <div class="meta">
-            ${escapeHtml(comment.nom)} 
-            <small>• ${formattedDate}</small>
-            <span class="comment-status status-approved">Approuvé</span>
+          <div class="comment-header">
+            <div class="comment-avatar">${initials}</div>
+            <div class="comment-meta">
+              <div class="comment-name">
+                ${escapeHtml(comment.nom)}
+                <span class="comment-status status-approved">Approuvé</span>
+              </div>
+              <div class="comment-date">${formattedDate}</div>
+            </div>
           </div>
-          <div class="text">${escapeHtml(comment.message)}</div>
+          <div class="comment-text">${escapeHtml(comment.message)}</div>
         `;
         
         commentList.appendChild(commentEl);
@@ -1287,9 +1683,11 @@
     // Fonction pour envoyer un commentaire
     async function submitComment(articleSlug) {
       const nameEl = document.getElementById('c_name');
+      const emailEl = document.getElementById('c_email');
       const messageEl = document.getElementById('c_message');
       
       const name = nameEl.value.trim();
+      const email = emailEl.value.trim();
       const message = messageEl.value.trim();
       
       // Validation
@@ -1298,22 +1696,33 @@
         return;
       }
       
+      if (name.length < 2) {
+        alert('Votre nom doit contenir au moins 2 caractères.');
+        return;
+      }
+      
       if (message.length < 10) {
         alert('Votre commentaire doit contenir au moins 10 caractères.');
         return;
       }
       
+      if (email && !validateEmail(email)) {
+        alert('Merci de renseigner une adresse email valide.');
+        return;
+      }
+      
       // Désactiver le bouton pendant l'envoi
       const postBtn = document.getElementById('postBtn');
-      const originalText = postBtn.textContent;
-      postBtn.textContent = 'Envoi en cours...';
+      const originalText = postBtn.innerHTML;
+      postBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
       postBtn.disabled = true;
       
       try {
         // Préparer les données du commentaire
         const commentData = {
           nom: name,
-          message: message
+          message: message,
+          email: email || undefined
         };
         
         // Envoyer le commentaire à l'API
@@ -1324,7 +1733,7 @@
         const successMessage = document.createElement('div');
         successMessage.className = 'success-message';
         successMessage.innerHTML = `
-          <p><strong>Merci pour votre commentaire !</strong></p>
+          <p><strong><i class="fas fa-check-circle"></i> Merci pour votre commentaire !</strong></p>
           <p>Votre commentaire a été soumis avec succès et est en attente de modération.</p>
           <p><small>Il sera visible une fois approuvé par l'équipe de modération.</small></p>
         `;
@@ -1332,6 +1741,7 @@
         
         // Réinitialiser le formulaire
         nameEl.value = '';
+        emailEl.value = '';
         messageEl.value = '';
         
         // Recharger les commentaires après un délai
@@ -1346,7 +1756,7 @@
         alert('Une erreur est survenue lors de l\'envoi du commentaire. Veuillez réessayer.');
       } finally {
         // Réactiver le bouton
-        postBtn.textContent = originalText;
+        postBtn.innerHTML = originalText;
         postBtn.disabled = false;
       }
     }
@@ -1394,6 +1804,20 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Mettre à jour l'année dans le footer
       document.getElementById('year').textContent = new Date().getFullYear();
+      
+      // Fermer le modal en cliquant à l'extérieur
+      document.getElementById('imageModal').addEventListener('click', (e) => {
+        if (e.target.classList.contains('image-modal')) {
+          closeImageModal();
+        }
+      });
+      
+      // Fermer le modal avec la touche Échap
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeImageModal();
+        }
+      });
       
       // Charger les articles
       loadArticles();
